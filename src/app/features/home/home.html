@@ -4,23 +4,23 @@
       <div class="flex items-center space-x-2">
         <!-- <Wind className="h-8 w-8 text-blue-600" /> -->
          <lucide-icon [img]="Wind" class="h-8 w-8 text-blue-600"></lucide-icon>
-        <h1 class="text-2xl font-bold text-gray-800">Appa Hauling</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Acarreos Appa</h1>
       </div>
       <nav class="hidden md:flex items-center space-x-6">
         <a routerLink="/services" class="text-gray-600 hover:text-blue-600 transition-colors">
-          Services
+          Servicios
         </a>
         <a routerLink="/tracking" class="text-gray-600 hover:text-blue-600 transition-colors">
-          Track Order
+          Seguimmiento del pedido
         </a>
         <a routerLink="/inventory" class="text-gray-600 hover:text-blue-600 transition-colors">
-          Our Bison
+          Nuestros Bisontes
         </a>
         <a routerLink="/login" class="text-gray-600 hover:text-blue-600 transition-colors">
           Login
         </a>
         <a routerLink="/register">
-          <app-button label="Get Started" type="primary"></app-button>
+          <app-button label="Registrase" type="primary"></app-button>
         </a>
       </nav>
     </div>
@@ -31,18 +31,18 @@
     <div class="container mx-auto text-center">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-5xl font-bold text-gray-800 mb-6">
-          Soar Across the Four Nations with <span class="text-blue-600">Appa Hauling</span>
+          Vuela por las Cuatro Naciones con <span class="text-blue-600">Acarreos Appa</span>
         </h2>
         <p class="text-xl text-gray-600 mb-8">
-          The most trusted flying bison transportation service. From the Air Temples to the Earth Kingdom, we'll get
-          your belongings there safely and majestically.
+        El servicio de transporte de bisontes voladores más confiable. Desde los Templos del Aire hasta el Reino Tierra, 
+        llevaremos tus pertenencias de forma segura y majestuosa.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a routerLink="/order">
-            <app-button label="Book Your Journey" type="primary" class="text-lg px-8 py-3"></app-button>
+            <app-button label="Reserva tu acarreo" type="primary" class="text-lg px-8 py-3"></app-button>
           </a>
           <a routerLink="/quote">
-            <app-button label="Get Quote" type="secondary" class="text-lg px-8 py-3"></app-button>
+            <app-button label="Cotiza tu acarreo" type="secondary" class="text-lg px-8 py-3"></app-button>
           </a>
         </div>
       </div>
@@ -51,28 +51,32 @@
 
   <section class="py-10 px-4">
     <div class="container mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
         <app-card 
-          title="Air Nation" 
-          description="Swift deliveries to the Air Temples and floating cities" 
+          class="h-full flex flex-col" 
+          title="Nacion del aire" 
+          description="Entregas rápidas a los Templos del Aire y ciudades flotantes" 
           [icon]="Wind"
           color="orange"
         />
         <app-card 
-          title="Water Tribe" 
-          description="Reliable transport to the Northern and Southern Water Tribes" 
+          class="h-full flex flex-col" 
+          title="Tribu del agua" 
+          description="Transporte confiable a las Tribus del Agua del Norte y del Sur" 
           [icon]="Waves"
           color="blue"
         />
         <app-card 
-          title="Fire Nation" 
-          description="Safe passage through Fire Nation territories and islands" 
+          class="h-full flex flex-col" 
+          title="Nacion del fuego" 
+          description="Paso seguro a través de los territorios e islas de la Nación del Fuego" 
           [icon]="Flame"
           color="red"
         />
         <app-card 
-          title="Earth Kingdom" 
-          description="Sturdy deliveries to Ba Sing Se and beyond" 
+          class="h-full flex flex-col" 
+          title="Reino Tierra" 
+          description="Entregas robustas a Ba Sing Se y más allá" 
           [icon]="Mountain"
           color="green"
         />
@@ -83,23 +87,23 @@
       <!-- Features Section -->
       <section class="py-16 px-4 bg-gradient-to-r from-blue-50 to-sky-50">
         <div class="container mx-auto">
-          <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose Appa Hauling?</h3>
+          <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">¿Porqué escoger Acarreos Appa?</h3>
           <div class="grid md:grid-cols-3 gap-8">
             <app-card 
-              title="Experienced Bison" 
-              description="Our flying bison are trained by the best Air Nomad masters and have years of experience" 
+              title="Bisontes experimentados" 
+              description="Nuestros bisontes voladores están entrenados por los mejores maestros aire y tienen años de experiencia" 
               [icon]="Star"
               color="yellow"
             />
             <app-card 
-              title="Expert Caretakers" 
-              description="Professional airbenders and animal handlers ensure safe and comfortable journeys" 
+              title="Cuidadores experimentados" 
+              description="Maestros aire profesionales y cuidadores de animales garantizan viajes seguros y cómodos" 
               [icon]="Users"
               color="blue"
             />
             <app-card 
-              title="Secure Transport" 
-              description="Your belongings are secured with the finest Earth Kingdom materials and Air Nation techniques" 
+              title="Transporte seguro" 
+              description="Sus pertenencias están aseguradas con los mejores materiales del Reino Tierra y las técnicas de la nación aire" 
               [icon]="Package"
               color="green"
             />
@@ -110,12 +114,12 @@
       <!-- CTA Section -->
       <section class="py-16 px-4 bg-blue-600 text-white">
         <div class="container mx-auto text-center">
-          <h3 class="text-3xl font-bold mb-4">Ready to Soar?</h3>
+          <h3 class="text-3xl font-bold mb-4">¿Listo para volar?</h3>
           <p class="text-xl mb-8 opacity-90">
-            Join thousands of satisfied customers who trust Appa Hauling for their transportation needs
+            Únase a miles de clientes satisfechos que confían en AcarreosAppa para sus necesidades de transporte.
           </p>
             <a routerLink="/register">
-              <app-button label="Start Your Journey Today" type="secondary" class="text-lg px-8 py-3"></app-button>
+              <app-button label="Comienza tu viaje hoy" type="secondary" class="text-lg px-8 py-3"></app-button>
             </a>
         </div>
       </section>
@@ -127,28 +131,28 @@
             <div>
               <div class="flex items-center space-x-2 mb-4">
                 <lucide-icon [img]="Wind" class="h-6 w-6" />
-                <span class="text-lg font-semibold">Appa Hauling</span>
+                <span class="text-lg font-semibold">Acarreos Appa</span>
               </div>
-              <p class="text-gray-400">
-                Connecting the four nations through the majesty of flying bison transportation.
+              <p class="text-gray-400"> 
+              Conectando las cuatro naciones a través de la majestuosidad del transporte de bisontes voladores.
               </p>
             </div>
             <div>
-              <h4 class="font-semibold mb-4">Services</h4>
+              <h4 class="font-semibold mb-4">Servicios</h4>
               <ul class="space-y-2 text-gray-400">
                 <li>
                   <a routerLink="/services" class="hover:text-white transition-colors">
-                    Residential Moving
+                    Mudanza residencial
                   </a>
                 </li>
                 <li>
                   <a routerLink="/services" class="hover:text-white transition-colors">
-                    Commercial Transport
+                    Transporte comercial
                   </a>
                 </li>
                 <li>
                   <a routerLink="/services" class="hover:text-white transition-colors">
-                    Express Delivery
+                    Entrega urgente
                   </a>
                 </li>
               </ul>
@@ -158,44 +162,44 @@
               <ul class="space-y-2 text-gray-400">
                 <li>
                   <a routerLink="/tracking" class="hover:text-white transition-colors">
-                    Track Your Order
+                    Rastrea tu ordén
                   </a>
                 </li>
                 <li>
                   <a routerLink="/help" class="hover:text-white transition-colors">
-                    Help Center
+                    Centro de ayuda
                   </a>
                 </li>
                 <li>
                   <a routerLink="/contact" class="hover:text-white transition-colors">
-                    Contact Us
+                    Contactanos
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 class="font-semibold mb-4">Company</h4>
+              <h4 class="font-semibold mb-4">Compañia</h4>
               <ul class="space-y-2 text-gray-400">
                 <li>
                   <a routerLink="/about" class="hover:text-white transition-colors">
-                    About Us
+                    Acerca de nosotros
                   </a>
                 </li>
                 <li>
                   <a routerLink="/inventory" class="hover:text-white transition-colors">
-                    Our Bison
+                    Nuestros bisontes
                   </a>
                 </li>
                 <li>
                   <a routerLink="/careers" class="hover:text-white transition-colors">
-                    Careers
+                    Carreras
                   </a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Appa Hauling. All rights reserved. Yip yip!</p>
+            <p>&copy; 2024 Acarreos Appa. Reservados todos los derechos. Yip yip!</p>
           </div>
         </div>
       </footer>
