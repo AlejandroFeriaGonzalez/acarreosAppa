@@ -5,6 +5,7 @@ import { Register } from './features/register/register';
 import { Quote } from './features/quote/quote';
 import { Order } from './features/order/order';
 import { Tracking } from './features/tracking/tracking';
+import { Inventory } from './features/inventory/inventory';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'quote', component: Quote},
   { path: 'order', component: Order},
   { path: 'tracking', component: Tracking},
+  { path: 'inventory', component: Inventory},
   { path: '**', redirectTo: 'home' },
 ];
