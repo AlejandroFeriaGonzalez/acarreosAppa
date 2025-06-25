@@ -1,3 +1,12 @@
-<button [class]="buttonClass()" [type]="type()" [disabled]="disabled()">
-  <ng-content></ng-content>
+<button
+  class="rounded-md font-semibold px-4 py-2 cursor-pointer"
+  [class.bg-blue-500]="type() === 'primary'"
+  [class.text-white]="type() === 'primary'"
+  [class.bg-white]="type() === 'secondary'"
+  [class.text-blue-500]="type() === 'secondary'"
+  [class.border]="type() === 'secondary'"
+  [class.border-blue-500]="type() === 'secondary'"
+  (click)="onClick()"
+>
+  {{ label() }}
 </button>
