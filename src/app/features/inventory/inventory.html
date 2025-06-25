@@ -3,23 +3,23 @@
     <div class="mb-6">
       <a routerLink="/" class="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors">
         <lucide-icon [img]="ArrowLeft" class="h-4 w-4 mr-2"></lucide-icon>
-        Back to Home
+        Volver a Home
       </a>
     </div>
 
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Our Flying Bison Fleet</h1>
-      <p class="text-gray-600">Meet our magnificent flying bison and their expert caretakers</p>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Nuestra flota de bisones voladores</h1>
+      <p class="text-gray-600">Conozca a nuestros magníficos bisontes voladores y a sus expertos cuidadores</p>
     </div>
 
     <!-- Filters -->
     <div class="mb-8 p-6 bg-white shadow rounded">
       <div class="grid md:grid-cols-4 gap-4">
         <div class="relative">
-          <lucide-icon [img]="Search" class="absolute left-3 top-3 h-4 w-4 text-gray-400"></lucide-icon>
+          <lucide-icon [img]="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"></lucide-icon>
           <input
             type="text"
-            placeholder="Search bison or caretaker..."
+            placeholder="Buscar bisonte o cuidador"
             class="pl-10 w-full border rounded py-2"
             [value]="searchTerm()"
             (input)="searchTerm.set($any($event.target).value || '')"
@@ -36,15 +36,15 @@
           [value]="specializationFilter()"
           (change)="specializationFilter.set($any($event.target).value || 'all')"
         >
-          <option value="all">All Specializations</option>
-          <option value="long distance">Long Distance</option>
-          <option value="express">Express Delivery</option>
-          <option value="fragile">Fragile Items</option>
-          <option value="heavy">Heavy Cargo</option>
-          <option value="stealth">Stealth Delivery</option>
-          <option value="passenger">Passenger Transport</option>
+          <option value="all">Todas las especializaciones</option>
+          <option value="largas distancias">Largas distancias</option>
+          <option value="express">Entrega express</option>
+          <option value="fragil">Articulos fragiles</option>
+          <option value="pesada">Carga pesada</option>
+          <option value="discreta">Entrega discreta</option>
+          <option value="pasajeros  ">Transporte de pasajeros</option>
         </select>
-        <button class="w-full border rounded py-2 bg-gray-100 hover:bg-gray-200" (click)="clearFilters()">Clear Filters</button>
+        <button class="w-full border rounded py-2 bg-gray-100 hover:bg-gray-200" (click)="clearFilters()">Limpiar filtros</button>
       </div>
     </div>
 
@@ -57,11 +57,11 @@
             {{ bison.status }}
           </span>
         </div>
-        <p class="text-gray-600 mb-4">Age: {{ bison.age }} years • {{ bison.specialization }}</p>
+        <p class="text-gray-600 mb-4">Edad: {{ bison.age }} años • {{ bison.specialization }}</p>
         <div class="flex items-center space-x-2 mb-4">
           <lucide-icon [img]="Star" class="h-4 w-4 text-yellow-500"></lucide-icon>
           <span class="font-medium">{{ bison.rating }}</span>
-          <span class="text-gray-500">({{ bison.completedJobs }} jobs)</span>
+          <span class="text-gray-500">({{ bison.completedJobs }} viajes)</span>
         </div>
         <div class="flex items-center space-x-2 text-sm text-gray-600 mb-4">
           <lucide-icon [img]="MapPin" class="h-4 w-4"></lucide-icon>
@@ -73,18 +73,18 @@
         </div>
         <p class="text-sm text-gray-600 mb-4">{{ bison.description }}</p>
         <a *ngIf="bison.status === 'Disponible'" routerLink="/order" class="block w-full text-center py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Request {{ bison.name }}
+          Solicitar {{ bison.name }}
         </a>
       </div>
     </div>
 
     <!-- Fleet Statistics -->
     <div class="mt-8 p-6 bg-white shadow rounded">
-      <h2 class="text-xl font-bold mb-4">Fleet Statistics</h2>
+      <h2 class="text-xl font-bold mb-4">Estadisticas de la flota</h2>
       <div class="grid md:grid-cols-4 gap-6 text-center">
         <div>
           <div class="text-2xl font-bold text-blue-600">{{ fleetStatistics().totalBison }}</div>
-          <div class="text-gray-600">Total Bison</div>
+          <div class="text-gray-600">Total de Bisones</div>
         </div>
         <div>
           <div class="text-2xl font-bold text-green-600">{{ fleetStatistics().availableBison }}</div>
@@ -92,11 +92,11 @@
         </div>
         <div>
           <div class="text-2xl font-bold text-yellow-600">{{ fleetStatistics().totalDeliveries }}</div>
-          <div class="text-gray-600">Total Deliveries</div>
+          <div class="text-gray-600">Total de viajes</div>
         </div>
         <div>
           <div class="text-2xl font-bold text-purple-600">{{ fleetStatistics().averageRating }}</div>
-          <div class="text-gray-600">Average Rating</div>
+          <div class="text-gray-600">Calificación promedio</div>
         </div>
       </div>
     </div>
