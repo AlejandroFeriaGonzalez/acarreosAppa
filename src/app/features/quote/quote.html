@@ -1,1 +1,193 @@
-<p>quote works!</p>
+<div class="min-h-screen bg-gradient-to-b from-sky-100 to-blue-50 py-12 px-4">
+  <div class="container mx-auto max-w-4xl">
+    <div class="mb-6">
+      <a routerLink="/" class="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors">
+        <lucide-icon [img]="ArrowLeft" class="h-4 w-4 mr-2"></lucide-icon>
+        Back to Home
+      </a>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Quote Form -->
+      <div class="shadow-lg rounded-lg bg-white">
+        <div class="text-center p-6">
+          <div class="flex justify-center mb-4">
+            <lucide-icon [img]="Calculator" class="h-12 w-12 text-blue-600"></lucide-icon>
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-800">Get Your Quote</h2>
+          <p class="text-gray-600">Calculate the cost for your flying bison delivery</p>
+        </div>
+        <div class="p-6">
+          <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">From Nation</label>
+                <select formControlName="fromNation"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                  <option value="" disabled selected>Select nation</option>
+                  <option value="air">Air Nation</option>
+                  <option value="water">Water Tribe</option>
+                  <option value="fire">Fire Nation</option>
+                  <option value="earth">Earth Kingdom</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">To Nation</label>
+                <select formControlName="toNation"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                  <option value="" disabled selected>Select nation</option>
+                  <option value="air">Air Nation</option>
+                  <option value="water">Water Tribe</option>
+                  <option value="fire">Fire Nation</option>
+                  <option value="earth">Earth Kingdom</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-700">Distance</label>
+              <select formControlName="distance"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                <option value="" disabled selected>Select distance</option>
+                <option value="short">Short (Within Nation)</option>
+                <option value="medium">Medium (Neighboring Nations)</option>
+                <option value="long">Long (Cross-Continental)</option>
+                <option value="intercontinental">Intercontinental</option>
+              </select>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-700">Service Type</label>
+              <select formControlName="serviceType"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                <option value="" disabled selected>Select service</option>
+                <option value="residential">Residential Moving</option>
+                <option value="commercial">Commercial Transport</option>
+                <option value="express">Express Delivery</option>
+                <option value="bulk">Bulk Cargo</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Package Size</label>
+                <select formControlName="packageSize"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                  <option value="" disabled selected>Select size</option>
+                  <option value="small">Small (1-2 rooms)</option>
+                  <option value="medium">Medium (3-4 rooms)</option>
+                  <option value="large">Large (5+ rooms)</option>
+                  <option value="commercial">Commercial</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Weight (lbs)</label>
+                <input type="number" formControlName="weight" placeholder="Estimated weight"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="express" formControlName="expressDelivery"
+                  class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4" />
+                <label for="express" class="text-sm font-medium text-gray-700">Express Delivery (+50%)</label>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="insurance" formControlName="insurance"
+                  class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4" />
+                <label for="insurance" class="text-sm font-medium text-gray-700">Full Coverage Insurance (+20%)</label>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="fragile" formControlName="fragileItems"
+                  class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4" />
+                <label for="fragile" class="text-sm font-medium text-gray-700">Fragile Items Handling (+$50)</label>
+              </div>
+            </div>
+
+            <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Calculate Quote
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Quote Results -->
+      @if (quote()) {
+      <div class="shadow-lg rounded-lg bg-white">
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Your Quote</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="text-center">
+            <div class="text-4xl font-bold text-blue-600 mb-2">${{ quote().totalCost }}</div>
+            <p class="text-gray-600">Total Estimated Cost</p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="Package" class="h-5 w-5 text-blue-600" ></lucide-icon>
+                <span>Base Service</span>
+              </div>
+              <span class="font-medium">${{ quote().baseRate }}</span>
+            </div>
+
+            @for (addon of quote().addOns; track addon) {
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div class="flex items-center space-x-2">
+                @if (addon.name.includes("Express")) {
+                <lucide-icon [img]="Clock" class="h-5 w-5 text-orange-600"></lucide-icon>
+                }
+                @if (addon.name.includes("Insurance")) {
+                <lucide-icon [img]="Shield" class="h-5 w-5 text-green-600"></lucide-icon>
+                }
+                @if (addon.name.includes("Fragile")) {
+                <lucide-icon [img]="Package" class="h-5 w-5 text-purple-600"></lucide-icon>
+                }
+                <span>{{ addon.name }}</span>
+              </div>
+              <span class="font-medium">+${{ addon.cost | number:'1.0-0' }}</span>
+            </div>
+            }
+          </div>
+
+          <div class="border-t pt-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="Clock" class="h-5 w-5 text-blue-600"></lucide-icon>
+                <span>Estimated Delivery</span>
+              </div>
+              <span class="font-medium">{{ quote().estimatedDays }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="Wind" class="h-5 w-5 text-blue-600"></lucide-icon>
+                <span>Recommended Bison</span>
+              </div>
+              <span class="font-medium">{{ quote().bisonRecommendation }}</span>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <a routerLink="/order">
+              <button
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Book
+                This Service</button>
+            </a>
+            <button (click)="resetQuote()"
+              class="w-full border border-gray-400 hover:border-gray-500 text-gray-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Get New Quote
+            </button>
+          </div>
+
+          <div class="text-xs text-gray-500 text-center">
+            * Prices are estimates and may vary based on actual requirements
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
