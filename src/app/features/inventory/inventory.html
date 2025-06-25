@@ -26,10 +26,10 @@
           />
         </div>
         <select class="w-full border rounded py-2" [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value || 'all')">
-          <option value="all">All Status</option>
+          <option value="all">Todos los estados</option>
           <option value="disponible">Disponible</option>
-          <option value="in transit">In Transit</option>
-          <option value="maintenance">Maintenance</option>
+          <option value="en camino">En camino</option>
+          <option value="mantenimiento">Mantenimiento</option>
         </select>
         <select
           class="w-full border rounded py-2"
@@ -72,7 +72,7 @@
           <span>Caretaker: {{ bison.caretaker }}</span>
         </div>
         <p class="text-sm text-gray-600 mb-4">{{ bison.description }}</p>
-        <a *ngIf="bison.status === 'Available'" routerLink="/order" class="block w-full text-center py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <a *ngIf="bison.status === 'Disponible'" routerLink="/order" class="block w-full text-center py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
           Request {{ bison.name }}
         </a>
       </div>
@@ -88,7 +88,7 @@
         </div>
         <div>
           <div class="text-2xl font-bold text-green-600">{{ fleetStatistics().availableBison }}</div>
-          <div class="text-gray-600">Available</div>
+          <div class="text-gray-600">Disponible</div>
         </div>
         <div>
           <div class="text-2xl font-bold text-yellow-600">{{ fleetStatistics().totalDeliveries }}</div>
