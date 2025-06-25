@@ -22,16 +22,20 @@
             placeholder="Search bison or caretaker..."
             class="pl-10 w-full border rounded py-2"
             [value]="searchTerm()"
-            (input)="searchTerm.set($event.target.value || '')"
+            (input)="searchTerm.set($any($event.target).value || '')"
           />
         </div>
-        <select class="w-full border rounded py-2" [value]="statusFilter()" (change)="statusFilter.set($event.target.value || 'all')">
+        <select class="w-full border rounded py-2" [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value || 'all')">
           <option value="all">All Status</option>
           <option value="available">Available</option>
           <option value="in transit">In Transit</option>
           <option value="maintenance">Maintenance</option>
         </select>
-        <select class="w-full border rounded py-2" [value]="specializationFilter()" (change)="specializationFilter.set($event.target.value || 'all')">
+        <select
+          class="w-full border rounded py-2"
+          [value]="specializationFilter()"
+          (change)="specializationFilter.set($any($event.target).value || 'all')"
+        >
           <option value="all">All Specializations</option>
           <option value="long distance">Long Distance</option>
           <option value="express">Express Delivery</option>
