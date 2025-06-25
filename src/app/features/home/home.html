@@ -48,4 +48,155 @@
       </div>
     </div>
   </section>
+
+  <section class="py-10 px-4">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <app-card 
+          title="Air Nation" 
+          description="Swift deliveries to the Air Temples and floating cities" 
+          [icon]="Wind"
+          color="orange"
+        />
+        <app-card 
+          title="Water Tribe" 
+          description="Reliable transport to the Northern and Southern Water Tribes" 
+          [icon]="Waves"
+          color="blue"
+        />
+        <app-card 
+          title="Fire Nation" 
+          description="Safe passage through Fire Nation territories and islands" 
+          [icon]="Flame"
+          color="red"
+        />
+        <app-card 
+          title="Earth Kingdom" 
+          description="Sturdy deliveries to Ba Sing Se and beyond" 
+          [icon]="Mountain"
+          color="green"
+        />
+      </div>
+    </div>
+  </section>
+
+      <!-- Features Section -->
+      <section class="py-16 px-4 bg-gradient-to-r from-blue-50 to-sky-50">
+        <div class="container mx-auto">
+          <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose Appa Hauling?</h3>
+          <div class="grid md:grid-cols-3 gap-8">
+            <app-card 
+              title="Experienced Bison" 
+              description="Our flying bison are trained by the best Air Nomad masters and have years of experience" 
+              [icon]="Star"
+              color="yellow"
+            />
+            <app-card 
+              title="Expert Caretakers" 
+              description="Professional airbenders and animal handlers ensure safe and comfortable journeys" 
+              [icon]="Users"
+              color="blue"
+            />
+            <app-card 
+              title="Secure Transport" 
+              description="Your belongings are secured with the finest Earth Kingdom materials and Air Nation techniques" 
+              [icon]="Package"
+              color="green"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="py-16 px-4 bg-blue-600 text-white">
+        <div class="container mx-auto text-center">
+          <h3 class="text-3xl font-bold mb-4">Ready to Soar?</h3>
+          <p class="text-xl mb-8 opacity-90">
+            Join thousands of satisfied customers who trust Appa Hauling for their transportation needs
+          </p>
+            <a routerLink="/register">
+              <app-button label="Start Your Journey Today" type="secondary" class="text-lg px-8 py-3"></app-button>
+            </a>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-gray-800 text-white py-12 px-4">
+        <div class="container mx-auto">
+          <div class="grid md:grid-cols-4 gap-8">
+            <div>
+              <div class="flex items-center space-x-2 mb-4">
+                <lucide-icon [img]="Wind" class="h-6 w-6" />
+                <span class="text-lg font-semibold">Appa Hauling</span>
+              </div>
+              <p class="text-gray-400">
+                Connecting the four nations through the majesty of flying bison transportation.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Services</h4>
+              <ul class="space-y-2 text-gray-400">
+                <li>
+                  <a routerLink="/services" class="hover:text-white transition-colors">
+                    Residential Moving
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/services" class="hover:text-white transition-colors">
+                    Commercial Transport
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/services" class="hover:text-white transition-colors">
+                    Express Delivery
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Support</h4>
+              <ul class="space-y-2 text-gray-400">
+                <li>
+                  <a routerLink="/tracking" class="hover:text-white transition-colors">
+                    Track Your Order
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/help" class="hover:text-white transition-colors">
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/contact" class="hover:text-white transition-colors">
+                    Contact Us
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Company</h4>
+              <ul class="space-y-2 text-gray-400">
+                <li>
+                  <a routerLink="/about" class="hover:text-white transition-colors">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/inventory" class="hover:text-white transition-colors">
+                    Our Bison
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/careers" class="hover:text-white transition-colors">
+                    Careers
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Appa Hauling. All rights reserved. Yip yip!</p>
+          </div>
+        </div>
+      </footer>
 </div>
