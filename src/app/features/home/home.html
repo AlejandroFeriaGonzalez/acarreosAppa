@@ -1,5 +1,51 @@
-<p class="text-red-500">home works!</p>
+<div class="min-h-screen bg-gradient-to-b from-sky-100 to-blue-50">
+  <header class="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <!-- <Wind className="h-8 w-8 text-blue-600" /> -->
+         <lucide-icon [img]="Wind" class="h-8 w-8 text-blue-600"></lucide-icon>
+        <h1 class="text-2xl font-bold text-gray-800">Appa Hauling</h1>
+      </div>
+      <nav class="hidden md:flex items-center space-x-6">
+        <a routerLink="/services" class="text-gray-600 hover:text-blue-600 transition-colors">
+          Services
+        </a>
+        <a routerLink="/tracking" class="text-gray-600 hover:text-blue-600 transition-colors">
+          Track Order
+        </a>
+        <a routerLink="/inventory" class="text-gray-600 hover:text-blue-600 transition-colors">
+          Our Bison
+        </a>
+        <a routerLink="/login" class="text-gray-600 hover:text-blue-600 transition-colors">
+          Login
+        </a>
+        <a routerLink="/register">
+          <app-button label="Get Started" type="primary"></app-button>
+        </a>
+      </nav>
+    </div>
+  </header>
 
-<app-button label="Primary Button" type="primary"></app-button>
-
-<app-button label="Secondary Button" type="secondary"></app-button>
+  <!-- Hero Section -->
+  <section class="py-20 px-4">
+    <div class="container mx-auto text-center">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-5xl font-bold text-gray-800 mb-6">
+          Soar Across the Four Nations with <span class="text-blue-600">Appa Hauling</span>
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+          The most trusted flying bison transportation service. From the Air Temples to the Earth Kingdom, we'll get
+          your belongings there safely and majestically.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a routerLink="/order">
+            <app-button label="Book Your Journey" type="primary" class="text-lg px-8 py-3"></app-button>
+          </a>
+          <a routerLink="/quote">
+            <app-button label="Get Quote" type="secondary" class="text-lg px-8 py-3"></app-button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
