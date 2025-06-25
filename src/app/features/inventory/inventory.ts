@@ -31,12 +31,12 @@ export class Inventory {
   readonly Heart = Heart;
 
   readonly bisonData: Signal<Bison[]> = signal([
-    { id: 1, name: 'Appa Jr.', age: 8, status: 'Disponible', specialization: 'Largas distancias', rating: 5, location: 'Air Temple Island', caretaker: 'Master Jinora', completedJobs: 247, description: 'Descendant of the legendary Appa, specializes in cross-nation deliveries.' },
-    { id: 2, name: 'Nimbus', age: 12, status: 'En camino', specialization: 'Entrega express', rating: 4.8, location: 'En route to Fire Nation', caretaker: 'Airbender Kai', completedJobs: 189, description: 'Fastest bison in our fleet, perfect for urgent deliveries.' },
-    { id: 3, name: 'Cloudy', age: 6, status: 'Disponible', specialization: 'Articulos fragiles', rating: 4.9, location: 'Ba Sing Se Station', caretaker: 'Master Opal', completedJobs: 156, description: 'Gentle and careful, ideal for transporting delicate cargo.' },
-    { id: 4, name: 'Thunder', age: 15, status: 'Mantenimiento', specialization: 'Carga pesada', rating: 4.7, location: 'Republic City Depot', caretaker: 'Veteran Bumi', completedJobs: 312, description: 'Our strongest bison, capable of carrying the heaviest loads.' },
-    { id: 5, name: 'Whisper', age: 4, status: 'Disponible', specialization: 'Entrega discreta', rating: 4.6, location: 'Northern Air Temple', caretaker: 'Master Ikki', completedJobs: 98, description: 'Young but skilled, perfect for discrete and quiet deliveries.' },
-    { id: 6, name: 'Breeze', age: 10, status: 'Disponible', specialization: 'Transporte de pasajeros', rating: 4.9, location: 'Southern Water Tribe', caretaker: 'Airbender Meelo', completedJobs: 203, description: 'Comfortable and smooth flying, great for passenger services.' }
+    { id: 1, name: 'Appa Jr.', age: 8, status: 'Disponible', specialization: 'Largas distancias', rating: 5, location: 'Isla del Templo del Aire', caretaker: 'Maestra Jinora', completedJobs: 247, description: 'Descendiente del legendario Appa, especializado en entregas entre naciones.' },
+    { id: 2, name: 'Nimbus', age: 12, status: 'En camino', specialization: 'Entrega express', rating: 4.8, location: 'En ruta a la Nación del Fuego', caretaker: 'Maestro Aire Kai', completedJobs: 189, description: 'El bisonte más rápido de nuestra flota, perfecto para entregas urgentes.' },
+    { id: 3, name: 'Cloudy', age: 6, status: 'Disponible', specialization: 'Articulos fragiles', rating: 4.9, location: 'Estación Ba Sing Se', caretaker: 'Maestra Opal', completedJobs: 156, description: 'Suave y cuidadoso, ideal para transportar carga delicada.' },
+    { id: 4, name: 'Thunder', age: 15, status: 'Mantenimiento', specialization: 'Carga pesada', rating: 4.7, location: 'Depósito Ciudad República', caretaker: 'Veterano Bumi', completedJobs: 312, description: 'Nuestro bisonte más fuerte, capaz de transportar las cargas más pesadas.' },
+    { id: 5, name: 'Whisper', age: 4, status: 'Disponible', specialization: 'Entrega discreta', rating: 4.6, location: 'Templo del Aire del Norte', caretaker: 'Maestra Ikki', completedJobs: 98, description: 'Joven pero hábil, perfecto para entregas discretas y silenciosas.' },
+    { id: 6, name: 'Breeze', age: 10, status: 'Disponible', specialization: 'Transporte de pasajeros', rating: 4.9, location: 'Tribu Agua del Sur', caretaker: 'Maestro Aire Meelo', completedJobs: 203, description: 'Vuelo cómodo y suave, excelente para servicios de pasajeros.' }
   ]);
 
   searchTerm = signal('');
