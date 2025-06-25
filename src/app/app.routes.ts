@@ -3,6 +3,7 @@ import { Home } from './features/home/home';
 import { Login } from './features/login/login';
 import { Register } from './features/register/register';
 import { Quote } from './features/quote/quote';
+import { Order } from './features/order/order';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'login', component: Login},
   { path: 'register', component: Register},
   { path: 'quote', component: Quote},
+  { path: 'order', component: Order},
   { path: '**', redirectTo: 'home' },
 ];
