@@ -3,7 +3,7 @@
     <div class="mb-6">
       <a routerLink="/" class="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors">
         <lucide-angular [img]="ArrowLeft" class="h-4 w-4 mr-2"></lucide-angular>
-        Back to Home
+        Volver a Inicio
       </a>
     </div>
 
@@ -12,22 +12,22 @@
         <div class="flex justify-center mb-4">
           <lucide-angular [img]="Package" class="h-12 w-12 text-blue-600"></lucide-angular>
         </div>
-        <h2 class="text-2xl font-semibold text-gray-800">Book Your Hauling Service</h2>
-        <p class="text-gray-600">Let our flying bison transport your belongings across the nations</p>
+        <h2 class="text-2xl font-semibold text-gray-800">Reserve su servicio de transporte</h2>
+        <p class="text-gray-600">Deje que nuestro bisonte volador transporte sus pertenencias a través de las naciones</p>
       </div>
       <div class="p-6">
         <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="space-y-6">
           <!-- Service Type -->
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Service Type</label>
+            <label class="block text-sm font-medium text-gray-700">Tipo de servicio</label>
             <select formControlName="serviceType"
               class="cursor-pointer flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
               <!-- <select formControlName="serviceType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm h-10"></select> -->
-              <option value="" disabled selected>Select service type</option>
-              <option value="residential">Residential Moving</option>
-              <option value="commercial">Commercial Transport</option>
-              <option value="express">Express Delivery</option>
-              <option value="bulk">Bulk Cargo</option>
+              <option value="" disabled selected>Seleccione el tipo de servicio</option>
+              <option value="residential">Mudanza residencial</option>
+              <option value="commercial">Transporte comercial</option>
+              <option value="express">Entrega express</option>
+              <option value="bulk">Carga pesada</option>
             </select>
           </div>
 
@@ -35,29 +35,29 @@
           <div class="space-y-4">
             <div class="flex items-center space-x-2">
               <lucide-angular [img]="MapPin" class="h-5 w-5 text-green-600"></lucide-angular>
-              <label class="block text-lg font-semibold text-gray-700">Pickup Location</label>
+              <label class="block text-lg font-semibold text-gray-700">Ubicación de recogida</label>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">From Nation</label>
+                <label class="block text-sm font-medium text-gray-700">De la nación</label>
                 <select formControlName="fromNation"
                   class="cursor-pointer flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
-                  <option value="" disabled selected>Select nation</option>
-                  <option value="air">Air Nation</option>
-                  <option value="water">Water Tribe</option>
-                  <option value="fire">Fire Nation</option>
-                  <option value="earth">Earth Kingdom</option>
+                  <option value="" disabled selected>Seleccione la nación</option>
+                  <option value="air">Nación del aire</option>
+                  <option value="water">Tribu del agua</option>
+                  <option value="fire">Nación del fuego</option>
+                  <option value="earth">Reino tierra</option>
                 </select>
               </div>
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" formControlName="fromCity" placeholder="e.g., Ba Sing Se"
+                <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                <input type="text" formControlName="fromCity" placeholder="e.j., Ba Sing Se"
                   class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
               </div>
             </div>
             <div class="space-y-2">
-              <label class="block text-sm font-medium text-gray-700">Full Address</label>
-              <input type="text" formControlName="fromAddress" placeholder="Street address, district, etc."
+              <label class="block text-sm font-medium text-gray-700">Dirección completa</label>
+              <input type="text" formControlName="fromAddress" placeholder="Dirección de la calle, distrito, etc."
                 class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
             </div>
           </div>
@@ -66,29 +66,29 @@
           <div class="space-y-4">
             <div class="flex items-center space-x-2">
               <lucide-angular [img]="MapPin" class="h-5 w-5 text-red-600"></lucide-angular>
-              <label class="block text-lg font-semibold text-gray-700">Delivery Location</label>
+              <label class="block text-lg font-semibold text-gray-700">Lugar de entrega</label>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">To Nation</label>
+                <label class="block text-sm font-medium text-gray-700">A la nación</label>
                 <select formControlName="toNation"
                   class="cursor-pointer flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
-                  <option value="" disabled selected>Select nation</option>
-                  <option value="air">Air Nation</option>
-                  <option value="water">Water Tribe</option>
-                  <option value="fire">Fire Nation</option>
-                  <option value="earth">Earth Kingdom</option>
+                  <option value="" disabled selected>Seleccione la nación</option>
+                  <option value="air">Nación del aire</option>
+                  <option value="water">Tribu del agua</option>
+                  <option value="fire">Nación del fuego</option>
+                  <option value="earth">Reino tierra</option>
                 </select>
               </div>
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" formControlName="toCity" placeholder="e.g., Republic City"
+                <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                <input type="text" formControlName="toCity" placeholder="e.j., Republic City"
                   class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
               </div>
             </div>
             <div class="space-y-2">
-              <label class="block text-sm font-medium text-gray-700">Full Address</label>
-              <input type="text" formControlName="toAddress" placeholder="Street address, district, etc."
+              <label class="block text-sm font-medium text-gray-700">Dirección completa</label>
+              <input type="text" formControlName="toAddress" placeholder="Dirección de la calle, distrito, etc."
                 class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
             </div>
           </div>
@@ -97,23 +97,23 @@
           <div class="space-y-4">
             <div class="flex items-center space-x-2">
               <lucide-angular [img]="Calendar" class="h-5 w-5 text-blue-600"></lucide-angular>
-              <label class="block text-lg font-semibold text-gray-700">Move Details</label>
+              <label class="block text-lg font-semibold text-gray-700">Detalles de mudanza</label>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Preferred Move Date</label>
+                <label class="block text-sm font-medium text-gray-700">Fecha de mudanza preferida</label>
                 <input type="date" formControlName="moveDate"
                   class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
               </div>
               <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Package Size</label>
+                <label class="block text-sm font-medium text-gray-700">Tamaño del paquete</label>
                 <select formControlName="packageSize"
                   class="cursor-pointer flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
-                  <option value="" disabled selected>Select size</option>
-                  <option value="small">Small (1-2 rooms)</option>
-                  <option value="medium">Medium (3-4 rooms)</option>
-                  <option value="large">Large (5+ rooms)</option>
-                  <option value="commercial">Commercial</option>
+                  <option value="" disabled selected>Seleccione el tamaño</option>
+                  <option value="small">Pequeña (1-2 habitaciones)</option>
+                  <option value="medium">Mediana (3-4 habitaciones)</option>
+                  <option value="large">Grande (5+ habitaciones)</option>
+                  <option value="commercial">Comercial</option>
                 </select>
               </div>
             </div>
@@ -121,16 +121,16 @@
 
           <!-- Special Items -->
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Special Items</label>
+            <label class="block text-sm font-medium text-gray-700">Artículos especiales</label>
             <input type="text" formControlName="specialItems"
-              placeholder="e.g., Fragile artifacts, Firebending scrolls, etc."
+              placeholder="e.j., Articulos fragiles, Pergaminos de control del fuego, etc."
               class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
           </div>
 
           <!-- Description -->
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Additional Details</label>
-            <textarea formControlName="description" placeholder="Any special instructions or requirements..." rows="3"
+            <label class="block text-sm font-medium text-gray-700">Detalles adicionales</label>
+            <textarea formControlName="description" placeholder="Cualquier instrucción o requisito especial..." rows="3"
               class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"></textarea>
           </div>
 
@@ -139,13 +139,12 @@
             <div class="flex items-center space-x-2">
               <input type="checkbox" id="express" formControlName="expressDelivery"
                 class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4" />
-              <label for="express" class="text-sm font-medium text-gray-700">Express Delivery (+50% fee)</label>
+              <label for="express" class="text-sm font-medium text-gray-700">Entrega express (+50% tarifa)</label>
             </div>
             <div class="flex items-center space-x-2">
               <input type="checkbox" id="insurance" formControlName="insurance"
                 class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4" />
-              <label for="insurance" class="text-sm font-medium text-gray-700">Full Coverage Insurance (+20%
-                fee)</label>
+              <label for="insurance" class="text-sm font-medium text-gray-700">Seguro de cobertura total (+20% tarifa)</label>
             </div>
           </div>
 
