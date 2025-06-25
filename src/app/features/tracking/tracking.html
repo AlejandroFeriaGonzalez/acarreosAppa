@@ -1,1 +1,166 @@
-<p>tracking works!</p>
+<div class="min-h-screen bg-gradient-to-b from-sky-100 to-blue-50 py-12 px-4">
+  <div class="container mx-auto max-w-4xl">
+    <div class="mb-6">
+      <a routerLink="/" class="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors">
+        <lucide-angular [name]="ArrowLeft" class="h-4 w-4 mr-2"></lucide-angular>
+        Back to Home
+      </a>
+    </div>
+
+    <div class="shadow-lg mb-8 rounded-lg bg-white">
+      <div class="p-6 text-center">
+        <div class="flex justify-center mb-4">
+          <lucide-angular [name]="Search" class="h-12 w-12 text-blue-600"></lucide-angular>
+        </div>
+        <h2 class="text-2xl font-bold">Track Your Order</h2>
+        <p class="text-gray-500">Enter your tracking ID to see the status of your flying bison delivery</p>
+      </div>
+      <div class="p-6 pt-0">
+        <form (submit)="handleTrack($event)" class="flex gap-4">
+          <div class="flex-1">
+            <label for="trackingId" class="sr-only"> Tracking ID </label>
+            <input
+              id="trackingId"
+              [formControl]="trackingIdControl"
+              placeholder="Enter tracking ID (e.g., a)"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            [disabled]="isLoading() || trackingIdControl.invalid"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-blue-400 disabled:cursor-not-allowed"
+          >
+            @if (isLoading()) {
+              <span>Tracking...</span>
+            } @else {
+              <span>Track Order</span>
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+
+    @if (orderData(); as order) {
+      <div class="space-y-6">
+        <!-- Order Status Card -->
+        <div class="shadow-lg rounded-lg bg-white">
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold">Order #{{ order.id }}</h3>
+              <span
+                class="px-2.5 py-0.5 text-xs font-semibold rounded-full"
+                [class]="order.status === 'in_transit' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'"
+              >
+                @if (order.status === 'in_transit') {
+                  <span>In Transit</span>
+                } @else {
+                  <span>{{ order.status }}</span>
+                }
+              </span>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <lucide-angular [name]="MapPin" class="h-5 w-5 text-green-600 mt-1 flex-shrink-0"></lucide-angular>
+                  <div>
+                    <p class="font-medium">From</p>
+                    <p class="text-gray-600">{{ order.from }}</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <lucide-angular [name]="MapPin" class="h-5 w-5 text-red-600 mt-1 flex-shrink-0"></lucide-angular>
+                  <div>
+                    <p class="font-medium">To</p>
+                    <p class="text-gray-600">{{ order.to }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <lucide-angular [name]="Wind" class="h-5 w-5 text-blue-600 mt-1 flex-shrink-0"></lucide-angular>
+                  <div>
+                    <p class="font-medium">Flying Bison</p>
+                    <p class="text-gray-600">{{ order.bisonName }}</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <lucide-angular [name]="Clock" class="h-5 w-5 text-orange-600 mt-1 flex-shrink-0"></lucide-angular>
+                  <div>
+                    <p class="font-medium">Estimated Arrival</p>
+                    <p class="text-gray-600">{{ order.estimatedArrival }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Current Status -->
+        <div class="shadow-lg rounded-lg bg-white">
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Current Status</h3>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <lucide-angular [name]="Wind" class="h-8 w-8 text-blue-600 flex-shrink-0"></lucide-angular>
+                <div>
+                  <p class="font-medium text-blue-800">Currently in transit</p>
+                  <p class="text-blue-600">{{ order.currentLocation }}</p>
+                  <p class="text-sm text-blue-500 mt-1">Caretaker: {{ order.caretaker }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="shadow-lg rounded-lg bg-white">
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Delivery Timeline</h3>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="space-y-4">
+              @for (step of order.timeline; track step.status) {
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
+                    [class]="
+                      step.completed
+                        ? step.active
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-green-600 text-white'
+                        : 'bg-gray-200 text-gray-400'
+                    "
+                  >
+                    @if (step.completed) {
+                      @if (step.active) {
+                        <lucide-angular [name]="Truck" class="h-4 w-4"></lucide-angular>
+                      } @else {
+                        <lucide-angular [name]="CheckCircle" class="h-4 w-4"></lucide-angular>
+                      }
+                    } @else {
+                      <div class="w-2 h-2 bg-current rounded-full"></div>
+                    }
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium" [class]="step.completed ? 'text-gray-800' : 'text-gray-400'">
+                      {{ step.status }}
+                    </p>
+                    <p class="text-sm" [class]="step.completed ? 'text-gray-600' : 'text-gray-400'">
+                      {{ step.time }}
+                    </p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
