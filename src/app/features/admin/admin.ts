@@ -1,12 +1,24 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { LucideAngularModule, Wind, LayoutDashboard, Users, Package, Settings, LogOut, Menu, Bell, Search, User } from 'lucide-angular';
+import {
+  LucideAngularModule,
+  Wind,
+  LayoutDashboard,
+  Users,
+  Package,
+  Settings,
+  LogOut,
+  Menu,
+  Bell,
+  Search,
+  User,
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-admin',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './admin.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Admin {
   readonly Wind = Wind;
@@ -21,9 +33,9 @@ export class Admin {
   readonly User = User;
 
   readonly navigation = [
-    { name: "Dashboard", href: "/admin/dashboard", icon: this.LayoutDashboard },
-    { name: "Bison Management", href: "/admin/bison", icon: this.Wind },
-    { name: "Caretakers", href: "/admin/caretaker", icon: this.Users },
-    { name: "Orders", href: "/admin/order-management", icon: this.Package },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: this.LayoutDashboard },
+    { name: 'Bison Management', href: '/admin/bison', icon: this.Wind },
+    { name: 'Caretakers', href: '/admin/caretaker', icon: this.Users },
+    { name: 'Orders', href: '/admin/order-management', icon: this.Package },
   ];
 }
