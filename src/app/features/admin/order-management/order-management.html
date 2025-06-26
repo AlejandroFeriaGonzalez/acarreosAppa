@@ -1,1 +1,179 @@
-<p class="text-red-500">order-management works!</p>
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Order Management</h1>
+      <p class="text-gray-600">Track and manage all hauling orders across the four nations</p>
+    </div>
+    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700">
+      <lucide-icon [img]="Package" class="h-4 w-4 mr-2"></lucide-icon>
+      Export Orders
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div class="p-6">
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="relative">
+          <lucide-icon [img]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"></lucide-icon>
+          <input
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm pl-10"
+            placeholder="Search orders, customers..."
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+        <select [(ngModel)]="statusFilter" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
+          <option value="all">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="in_transit">In Transit</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <select [(ngModel)]="priorityFilter" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
+          <option value="all">All Priority</option>
+          <option value="high">High</option>
+          <option value="standard">Standard</option>
+          <option value="low">Low</option>
+        </select>
+        <button
+          (click)="clearFilters()"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders List -->
+  <div class="space-y-4">
+    @for (order of filteredOrders(); track order.id) {
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="p-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <lucide-icon [img]="Package" class="h-8 w-8 text-blue-600"></lucide-icon>
+              <div>
+                <h3 class="text-lg font-semibold">{{ order.id }}</h3>
+                <p class="text-sm text-gray-600">{{ order.serviceType }}</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getPriorityColor(order.priority)">{{ order.priority }}</span>
+              <span [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getStatusColor(order.status)">{{ order.status.replace('_', ' ') }}</span>
+              <a [routerLink]="['/admin/orders', order.id, 'edit']">
+                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-9 w-9">
+                  <lucide-icon [img]="Edit" class="h-4 w-4"></lucide-icon>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 pt-0">
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="User" class="h-4 w-4 text-gray-500"></lucide-icon>
+                <div>
+                  <p class="font-medium">{{ order.customer }}</p>
+                  <p class="text-sm text-gray-600">{{ order.customerEmail }}</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-2">
+                <lucide-icon [img]="MapPin" class="h-4 w-4 text-green-600 mt-1"></lucide-icon>
+                <div>
+                  <p class="text-sm font-medium">From: {{ order.from }}</p>
+                  <p class="text-sm font-medium">To: {{ order.to }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-500"></lucide-icon>
+                <div>
+                  <p class="text-sm">Bison: <span class="font-medium">{{ order.bison }}</span></p>
+                  <p class="text-sm">Caretaker: <span class="font-medium">{{ order.caretaker }}</span></p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
+                <div>
+                  <p class="text-sm">Ordered: {{ order.orderDate | date }}</p>
+                  @if (order.estimatedDelivery !== 'N/A') {
+                    <p class="text-sm">Est. Delivery: {{ order.estimatedDelivery | date }}</p>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2">
+                <lucide-icon [img]="DollarSign" class="h-4 w-4 text-green-600"></lucide-icon>
+                <div>
+                  <p class="text-lg font-bold">{{ order.value | currency }}</p>
+                  <p class="text-sm text-gray-600">Weight: {{ order.weight }}</p>
+                </div>
+              </div>
+              @if (order.specialInstructions) {
+                <div>
+                  <p class="text-sm font-medium">Special Instructions:</p>
+                  <p class="text-sm text-gray-600">{{ order.specialInstructions }}</p>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex space-x-2 mt-6 pt-4 border-t">
+            <a [routerLink]="['/admin/orders', order.id]" class="flex-1">
+              <button class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
+                View Details
+              </button>
+            </a>
+            @if (order.status === 'pending') {
+              <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">Assign Bison</button>
+            }
+            @if (order.status === 'in_transit') {
+              <button class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
+                Update Status
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Orders Summary -->
+  <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div class="p-6">
+      <h3 class="text-2xl font-semibold leading-none tracking-tight">Orders Summary</h3>
+    </div>
+    <div class="p-6 pt-0">
+      <div class="grid md:grid-cols-5 gap-6">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-600">{{ ordersSummary().totalOrders }}</div>
+          <div class="text-sm text-gray-600">Total Orders</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-yellow-600">{{ ordersSummary().pending }}</div>
+          <div class="text-sm text-gray-600">Pending</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">{{ ordersSummary().inTransit }}</div>
+          <div class="text-sm text-gray-600">In Transit</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-green-600">{{ ordersSummary().completed }}</div>
+          <div class="text-sm text-gray-600">Completed</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-orange-600">{{ ordersSummary().totalRevenue | currency }}</div>
+          <div class="text-sm text-gray-600">Total Revenue</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
