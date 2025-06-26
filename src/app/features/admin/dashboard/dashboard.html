@@ -1,1 +1,181 @@
-<p>dashboard works!</p>
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+    <p class="text-gray-600">Welcome back! Here's what's happening with Appa Hauling today.</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="border rounded-lg p-4">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="text-sm font-medium">Total Bison</h3>
+        <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-600"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">{{ stats().totalBison }}</div>
+        <p class="text-xs text-green-600">{{ stats().availableBison }} available</p>
+      </div>
+    </div>
+
+    <div class="border rounded-lg p-4">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="text-sm font-medium">Active Orders</h3>
+        <lucide-icon [img]="Package" class="h-4 w-4 text-orange-600"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">{{ stats().activeOrders }}</div>
+        <p class="text-xs text-blue-600">{{ stats().pendingOrders }} pending</p>
+      </div>
+    </div>
+
+    <div class="border rounded-lg p-4">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="text-sm font-medium">Caregivers</h3>
+        <lucide-icon [img]="Users" class="h-4 w-4 text-green-600"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">{{ stats().activeCaregivers }}</div>
+        <p class="text-xs text-green-600">All active</p>
+      </div>
+    </div>
+
+    <div class="border rounded-lg p-4">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="text-sm font-medium">Today's Revenue</h3>
+        <lucide-icon [img]="DollarSign" class="h-4 w-4 text-purple-600"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">${{ stats().revenue.toLocaleString() }}</div>
+        <p class="text-xs text-green-600">+12% from yesterday</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-6">
+    <!-- Recent Orders -->
+    <div class="border rounded-lg">
+      <div class="p-4">
+        <h3 class="font-semibold">Recent Orders</h3>
+        <p class="text-sm text-gray-600">Latest hauling requests and their status</p>
+      </div>
+      <div class="p-4 pt-0">
+        <div class="space-y-4">
+          @for (order of recentOrders; track order.id) {
+            <div class="flex items-center justify-between p-3 border rounded-lg">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-medium">{{ order.id }}</span>
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold rounded-full capitalize"
+                    [class.bg-green-100]="order.status === 'completed'"
+                    [class.text-green-800]="order.status === 'completed'"
+                    [class.bg-blue-100]="order.status === 'in_transit'"
+                    [class.text-blue-800]="order.status === 'in_transit'"
+                    [class.bg-gray-100]="order.status === 'pending'"
+                    [class.text-gray-800]="order.status === 'pending'"
+                  >
+                    {{ order.status.replace('_', ' ') }}
+                  </span>
+                </div>
+                <p class="text-sm text-gray-600">{{ order.customer }}</p>
+                <p class="text-xs text-gray-500">{{ order.from }} → {{ order.to }}</p>
+              </div>
+              <div class="text-right">
+                <p class="font-medium">${{ order.value }}</p>
+                <p class="text-xs text-gray-500">{{ order.bison }}</p>
+              </div>
+            </div>
+          }
+        </div>
+        <div class="mt-4">
+          <a
+            routerLink="/admin/orders"
+            class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border"
+          >
+            View All Orders
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerts & Notifications -->
+    <div class="border rounded-lg">
+      <div class="p-4">
+        <h3 class="flex items-center space-x-2 font-semibold">
+          <span>Alerts & Notifications</span>
+          @if (stats().alerts > 0) {
+            <span class="inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-white">
+              {{ stats().alerts }}
+            </span>
+          }
+        </h3>
+        <p class="text-sm text-gray-600">Important updates requiring attention</p>
+      </div>
+      <div class="p-4 pt-0">
+        <div class="space-y-4">
+          @for (alert of alerts; track $index) {
+            <div class="flex items-start space-x-3 p-3 border rounded-lg">
+              <div class="flex-shrink-0 mt-1">
+                @switch (alert.type) {
+                  @case ('urgent') {
+                    <lucide-icon [img]="AlertTriangle" class="h-4 w-4 text-red-500"></lucide-icon>
+                  }
+                  @case ('warning') {
+                    <lucide-icon [img]="Clock" class="h-4 w-4 text-yellow-500"></lucide-icon>
+                  }
+                  @case ('info') {
+                    <lucide-icon [img]="CheckCircle" class="h-4 w-4 text-blue-500"></lucide-icon>
+                  }
+                }
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">{{ alert.message }}</p>
+                <p class="text-xs text-gray-500">{{ alert.time }}</p>
+              </div>
+            </div>
+          }
+        </div>
+        <div class="mt-4">
+          <button class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
+            View All Alerts
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="border rounded-lg">
+    <div class="p-4">
+      <h3 class="font-semibold">Quick Actions</h3>
+      <p class="text-sm text-gray-600">Common administrative tasks</p>
+    </div>
+    <div class="p-4 pt-0">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a
+          routerLink="/admin/bison/new"
+          class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
+        >
+          <lucide-icon [img]="Wind" class="h-6 w-6"></lucide-icon>
+          <span>Add Bison</span>
+        </a>
+        <a
+          routerLink="/admin/caretakers/new"
+          class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
+        >
+          <lucide-icon [img]="Users" class="h-6 w-6"></lucide-icon>
+          <span>Add Caretaker</span>
+        </a>
+        <a routerLink="/admin/orders" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
+          <lucide-icon [img]="Package" class="h-6 w-6"></lucide-icon>
+          <span>Manage Orders</span>
+        </a>
+        <a routerLink="/admin/reports" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
+          <lucide-icon [img]="TrendingUp" class="h-6 w-6"></lucide-icon>
+          <span>View Reports</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
