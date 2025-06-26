@@ -28,77 +28,77 @@ export class OrderManagement {
     {
       id: 'AP-123456',
       customer: 'Toph Beifong',
-      customerEmail: 'toph@earthkingdom.com',
-      from: 'Ba Sing Se, Earth Kingdom',
-      to: 'Republic City, United Republic',
+      customerEmail: 'toph@reinotierra.com',
+      from: 'Ba Sing Se, Reino Tierra',
+      to: 'Ciudad República, República Unida',
       status: 'in_transit' as const,
       priority: 'standard' as const,
       bison: 'Appa Jr.',
-      caretaker: 'Master Jinora',
+      caretaker: 'Maestra Jinora',
       orderDate: '2024-01-20',
       estimatedDelivery: '2024-01-22',
       value: 450,
       weight: '2,500 lbs',
-      serviceType: 'Residential Moving',
-      specialInstructions: 'Fragile earthbending scrolls included',
+      serviceType: 'Mudanza Residencial',
+      specialInstructions: 'Pergaminos de tierra control frágiles incluidos',
     },
     {
       id: 'AP-123457',
       customer: 'Katara',
-      customerEmail: 'katara@watertribe.com',
-      from: 'Southern Water Tribe',
-      to: 'Northern Air Temple',
+      customerEmail: 'katara@tribuagua.com',
+      from: 'Tribu Agua del Sur',
+      to: 'Templo del Aire del Norte',
       status: 'pending' as const,
       priority: 'high' as const,
-      bison: 'Unassigned',
-      caretaker: 'Unassigned',
+      bison: 'Sin asignar',
+      caretaker: 'Sin asignar',
       orderDate: '2024-01-21',
       estimatedDelivery: '2024-01-24',
       value: 320,
       weight: '1,800 lbs',
-      serviceType: 'Express Delivery',
-      specialInstructions: 'Temperature-sensitive healing supplies',
+      serviceType: 'Entrega Express',
+      specialInstructions: 'Suministros curativos sensibles a la temperatura',
     },
     {
       id: 'AP-123458',
       customer: 'Zuko',
-      customerEmail: 'zuko@firenation.com',
-      from: 'Fire Nation Capital',
-      to: 'Ba Sing Se, Earth Kingdom',
+      customerEmail: 'zuko@nacionfuego.com',
+      from: 'Capital de la Nación del Fuego',
+      to: 'Ba Sing Se, Reino Tierra',
       status: 'completed' as const,
       priority: 'standard' as const,
       bison: 'Thunder',
-      caretaker: 'Veteran Bumi',
+      caretaker: 'Veterano Bumi',
       orderDate: '2024-01-18',
       estimatedDelivery: '2024-01-20',
       value: 680,
       weight: '4,200 lbs',
-      serviceType: 'Commercial Transport',
-      specialInstructions: 'Diplomatic documents - high security',
+      serviceType: 'Transporte Comercial',
+      specialInstructions: 'Documentos diplomáticos - alta seguridad',
     },
     {
       id: 'AP-123459',
       customer: 'Sokka',
-      customerEmail: 'sokka@watertribe.com',
-      from: 'Republic City',
-      to: 'Kyoshi Island',
+      customerEmail: 'sokka@tribuagua.com',
+      from: 'Ciudad República',
+      to: 'Isla Kyoshi',
       status: 'scheduled' as const,
       priority: 'standard' as const,
       bison: 'Cloudy',
-      caretaker: 'Master Opal',
+      caretaker: 'Maestra Opal',
       orderDate: '2024-01-21',
       estimatedDelivery: '2024-01-23',
       value: 280,
       weight: '1,200 lbs',
-      serviceType: 'Residential Moving',
-      specialInstructions: 'Boomerang collection - handle with care',
+      serviceType: 'Mudanza Residencial',
+      specialInstructions: 'Colección de boomerangs - manejar con cuidado',
     },
     {
       id: 'AP-123460',
       customer: 'Ty Lee',
-      customerEmail: 'tylee@kyoshiwarriors.com',
-      from: 'Kyoshi Island',
-      to: 'Fire Nation Capital',
+      customerEmail: 'tylee@guerrerasyoshi.com',
+      from: 'Isla Kyoshi',
+      to: 'Capital de la Nación del Fuego',
       status: 'cancelled' as const,
       priority: 'low' as const,
       bison: 'N/A',
@@ -107,8 +107,8 @@ export class OrderManagement {
       estimatedDelivery: 'N/A',
       value: 0,
       weight: '800 lbs',
-      serviceType: 'Express Delivery',
-      specialInstructions: 'Customer cancelled due to schedule conflict',
+      serviceType: 'Entrega Express',
+      specialInstructions: 'Cliente canceló por conflicto de horario',
     },
   ]);
 
@@ -176,6 +176,36 @@ export class OrderManagement {
         return 'bg-gray-100 text-gray-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  }
+
+  getStatusTranslation(status: string): string {
+    switch (status) {
+      case 'pending':
+        return 'pendiente';
+      case 'scheduled':
+        return 'programado';
+      case 'in_transit':
+        return 'en tránsito';
+      case 'completed':
+        return 'completado';
+      case 'cancelled':
+        return 'cancelado';
+      default:
+        return status;
+    }
+  }
+
+  getPriorityTranslation(priority: string): string {
+    switch (priority) {
+      case 'high':
+        return 'alta';
+      case 'standard':
+        return 'estándar';
+      case 'low':
+        return 'baja';
+      default:
+        return priority;
     }
   }
 }

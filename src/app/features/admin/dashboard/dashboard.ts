@@ -45,7 +45,7 @@ export class Dashboard {
       id: 'AP-123456',
       customer: 'Toph Beifong',
       from: 'Ba Sing Se',
-      to: 'Republic City',
+      to: 'Ciudad República',
       status: 'in_transit',
       bison: 'Appa Jr.',
       value: 450,
@@ -53,16 +53,16 @@ export class Dashboard {
     {
       id: 'AP-123457',
       customer: 'Katara',
-      from: 'Southern Water Tribe',
-      to: 'Northern Air Temple',
+      from: 'Tribu Agua del Sur',
+      to: 'Templo del Aire del Norte',
       status: 'pending',
-      bison: 'Unassigned',
+      bison: 'Sin asignar',
       value: 320,
     },
     {
       id: 'AP-123458',
       customer: 'Zuko',
-      from: 'Fire Nation Capital',
+      from: 'Capital de la Nación del Fuego',
       to: 'Ba Sing Se',
       status: 'completed',
       bison: 'Thunder',
@@ -71,8 +71,21 @@ export class Dashboard {
   ];
 
   alerts = [
-    { type: 'warning', message: 'Thunder requires maintenance check', time: '2 hours ago' },
-    { type: 'info', message: 'New caretaker application received', time: '4 hours ago' },
-    { type: 'urgent', message: 'Weather alert: Storm approaching Fire Nation', time: '6 hours ago' },
+    { type: 'warning', message: 'Thunder requiere revisión de mantenimiento', time: 'hace 2 horas' },
+    { type: 'info', message: 'Nueva solicitud de cuidador recibida', time: 'hace 4 horas' },
+    { type: 'urgent', message: 'Alerta meteorológica: Tormenta acercándose a la Nación del Fuego', time: 'hace 6 horas' },
   ];
+
+  getStatusTranslation(status: string): string {
+    switch (status) {
+      case 'completed':
+        return 'completado';
+      case 'in_transit':
+        return 'en tránsito';
+      case 'pending':
+        return 'pendiente';
+      default:
+        return status;
+    }
+  }
 }

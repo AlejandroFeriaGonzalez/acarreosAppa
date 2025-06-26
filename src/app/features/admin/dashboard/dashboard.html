@@ -1,53 +1,53 @@
 <div class="space-y-6">
   <!-- Header -->
   <div>
-    <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-    <p class="text-gray-600">Welcome back! Here's what's happening with Appa Hauling today.</p>
+    <h1 class="text-3xl font-bold text-gray-900">Panel de Administración</h1>
+    <p class="text-gray-600">¡Bienvenido de vuelta! Esto es lo que está pasando con Appa Acarreos hoy.</p>
   </div>
 
   <!-- Stats Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     <div class="border rounded-lg p-4">
       <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-        <h3 class="text-sm font-medium">Total Bison</h3>
+        <h3 class="text-sm font-medium">Total de Bisontes</h3>
         <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-600"></lucide-icon>
       </div>
       <div>
         <div class="text-2xl font-bold">{{ stats().totalBison }}</div>
-        <p class="text-xs text-green-600">{{ stats().availableBison }} available</p>
+        <p class="text-xs text-green-600">{{ stats().availableBison }} disponibles</p>
       </div>
     </div>
 
     <div class="border rounded-lg p-4">
       <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-        <h3 class="text-sm font-medium">Active Orders</h3>
+        <h3 class="text-sm font-medium">Órdenes Activas</h3>
         <lucide-icon [img]="Package" class="h-4 w-4 text-orange-600"></lucide-icon>
       </div>
       <div>
         <div class="text-2xl font-bold">{{ stats().activeOrders }}</div>
-        <p class="text-xs text-blue-600">{{ stats().pendingOrders }} pending</p>
+        <p class="text-xs text-blue-600">{{ stats().pendingOrders }} pendientes</p>
       </div>
     </div>
 
     <div class="border rounded-lg p-4">
       <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-        <h3 class="text-sm font-medium">Caregivers</h3>
+        <h3 class="text-sm font-medium">Cuidadores</h3>
         <lucide-icon [img]="Users" class="h-4 w-4 text-green-600"></lucide-icon>
       </div>
       <div>
         <div class="text-2xl font-bold">{{ stats().activeCaregivers }}</div>
-        <p class="text-xs text-green-600">All active</p>
+        <p class="text-xs text-green-600">Todos activos</p>
       </div>
     </div>
 
     <div class="border rounded-lg p-4">
       <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-        <h3 class="text-sm font-medium">Today's Revenue</h3>
+        <h3 class="text-sm font-medium">Ingresos de Hoy</h3>
         <lucide-icon [img]="DollarSign" class="h-4 w-4 text-purple-600"></lucide-icon>
       </div>
       <div>
         <div class="text-2xl font-bold">${{ stats().revenue.toLocaleString() }}</div>
-        <p class="text-xs text-green-600">+12% from yesterday</p>
+        <p class="text-xs text-green-600">+12% desde ayer</p>
       </div>
     </div>
   </div>
@@ -56,8 +56,8 @@
     <!-- Recent Orders -->
     <div class="border rounded-lg">
       <div class="p-4">
-        <h3 class="font-semibold">Recent Orders</h3>
-        <p class="text-sm text-gray-600">Latest hauling requests and their status</p>
+        <h3 class="font-semibold">Órdenes Recientes</h3>
+        <p class="text-sm text-gray-600">Últimas solicitudes de acarreo y su estado</p>
       </div>
       <div class="p-4 pt-0">
         <div class="space-y-4">
@@ -75,7 +75,7 @@
                     [class.bg-gray-100]="order.status === 'pending'"
                     [class.text-gray-800]="order.status === 'pending'"
                   >
-                    {{ order.status.replace('_', ' ') }}
+                    {{ getStatusTranslation(order.status) }}
                   </span>
                 </div>
                 <p class="text-sm text-gray-600">{{ order.customer }}</p>
@@ -93,7 +93,7 @@
             routerLink="/admin/orders"
             class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border"
           >
-            View All Orders
+            Ver Todas las Órdenes
           </a>
         </div>
       </div>
@@ -103,14 +103,14 @@
     <div class="border rounded-lg">
       <div class="p-4">
         <h3 class="flex items-center space-x-2 font-semibold">
-          <span>Alerts & Notifications</span>
+          <span>Alertas y Notificaciones</span>
           @if (stats().alerts > 0) {
             <span class="inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-white">
               {{ stats().alerts }}
             </span>
           }
         </h3>
-        <p class="text-sm text-gray-600">Important updates requiring attention</p>
+        <p class="text-sm text-gray-600">Actualizaciones importantes que requieren atención</p>
       </div>
       <div class="p-4 pt-0">
         <div class="space-y-4">
@@ -138,7 +138,7 @@
         </div>
         <div class="mt-4">
           <button class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
-            View All Alerts
+            Ver Todas las Alertas
           </button>
         </div>
       </div>
@@ -148,8 +148,8 @@
   <!-- Quick Actions -->
   <div class="border rounded-lg">
     <div class="p-4">
-      <h3 class="font-semibold">Quick Actions</h3>
-      <p class="text-sm text-gray-600">Common administrative tasks</p>
+      <h3 class="font-semibold">Acciones Rápidas</h3>
+      <p class="text-sm text-gray-600">Tareas administrativas comunes</p>
     </div>
     <div class="p-4 pt-0">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -158,22 +158,22 @@
           class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
         >
           <lucide-icon [img]="Wind" class="h-6 w-6"></lucide-icon>
-          <span>Add Bison</span>
+          <span>Agregar Bisonte</span>
         </a>
         <a
           routerLink="/admin/caretakers/new"
           class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
         >
           <lucide-icon [img]="Users" class="h-6 w-6"></lucide-icon>
-          <span>Add Caretaker</span>
+          <span>Agregar Cuidador</span>
         </a>
         <a routerLink="/admin/orders" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
           <lucide-icon [img]="Package" class="h-6 w-6"></lucide-icon>
-          <span>Manage Orders</span>
+          <span>Gestionar Órdenes</span>
         </a>
         <a routerLink="/admin/reports" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
           <lucide-icon [img]="TrendingUp" class="h-6 w-6"></lucide-icon>
-          <span>View Reports</span>
+          <span>Ver Reportes</span>
         </a>
       </div>
     </div>
