@@ -36,9 +36,9 @@ export class Admin {
 
   readonly navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: this.LayoutDashboard },
-    { name: 'Bison Management', href: '/admin/bison', icon: this.Wind },
-    { name: 'Caretakers', href: '/admin/caretaker', icon: this.Users },
-    { name: 'Orders', href: '/admin/order-management', icon: this.Package },
+    { name: 'Gestión de Bisontes', href: '/admin/bison', icon: this.Wind },
+    { name: 'Cuidadores', href: '/admin/caretaker', icon: this.Users },
+    { name: 'Órdenes', href: '/admin/order-management', icon: this.Package },
   ];
 
   goToHome() {
