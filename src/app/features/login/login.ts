@@ -1,14 +1,24 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { LucideAngularModule, Wind, ArrowLeft } from 'lucide-angular';
-import { RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [LucideAngularModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login implements OnInit {
   readonly Wind = Wind;
@@ -18,12 +28,13 @@ export class Login implements OnInit {
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {
-  }
+  private router = inject(Router);
+
+  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.loginForm.valid) {
@@ -31,9 +42,18 @@ export class Login implements OnInit {
       // Handle login logic here (e.g., API call)
     } else {
       // Mark all fields as touched to display errors
-      Object.values(this.loginForm.controls).forEach(control => {
+      Object.values(this.loginForm.controls).forEach((control) => {
         control.markAsTouched();
       });
     }
+  }
+  // ir a /home
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  // ir a /admin
+  goToAdmin(): void {
+    this.router.navigate(['/admin']);
   }
 }
