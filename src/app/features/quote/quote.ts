@@ -79,34 +79,34 @@ export class Quote {
       const addOns: AddOn[] = [];
       if (quoteData.expressDelivery) {
         totalCost *= 1.5;
-        addOns.push({ name: "Express Delivery", cost: totalCost * 0.33 });
+        addOns.push({ name: "Entrega Express", cost: totalCost * 0.33 });
       }
       if (quoteData.insurance) {
         const insuranceCost = totalCost * 0.2;
         totalCost += insuranceCost;
-        addOns.push({ name: "Full Coverage Insurance", cost: insuranceCost });
+        addOns.push({ name: "Seguro de Cobertura Total", cost: insuranceCost });
       }
       if (quoteData.fragileItems) {
         const fragileCost = 50;
         totalCost += fragileCost;
-        addOns.push({ name: "Fragile Item Handling", cost: fragileCost });
+        addOns.push({ name: "Manejo de Artículos Frágiles", cost: fragileCost });
       }
 
       this.quote.set({
         baseRate,
         totalCost: Math.round(totalCost),
         addOns,
-        estimatedDays: quoteData.expressDelivery ? "1-2 days" : "3-5 days",
+        estimatedDays: quoteData.expressDelivery ? "1-2 días" : "3-5 días",
         bisonRecommendation: this.getBisonRecommendation(quoteData),
       });
     }
   }
 
   getBisonRecommendation(quoteData: any): string {
-    if (quoteData.serviceType === "express") return "Nimbus (Express Specialist)";
-    if (quoteData.fragileItems) return "Cloudy (Fragile Items Expert)";
-    if (quoteData.packageSize === "commercial") return "Thunder (Heavy Cargo)";
-    return "Appa Jr. (All-Purpose)";
+    if (quoteData.serviceType === "express") return "Nimbus (Especialista Express)";
+    if (quoteData.fragileItems) return "Cloudy (Experto en Artículos Frágiles)";
+    if (quoteData.packageSize === "commercial") return "Thunder (Carga Pesada)";
+    return "Appa Jr. (Multiuso)";
   }
 
   onSubmit() {
