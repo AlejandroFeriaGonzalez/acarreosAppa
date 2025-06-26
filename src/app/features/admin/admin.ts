@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LucideAngularModule, Wind, LayoutDashboard, Users, Package, Settings, LogOut, Menu, Bell, Search, User } from 'lucide-angular';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterOutlet, RouterLink, LucideAngularModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './admin.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
