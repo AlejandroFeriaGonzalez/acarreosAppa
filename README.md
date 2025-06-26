@@ -19,7 +19,7 @@ AcarreosAppa es una aplicación web desarrollada en Angular para la gestión y r
 
 1. **Clona el repositorio:**
    ```sh
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/AlejandroFeriaGonzalez/acarreosAppa.git
    cd acarreosAppa
    ```
 
