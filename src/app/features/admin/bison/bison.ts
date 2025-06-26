@@ -12,8 +12,8 @@ import {
   Calendar,
 } from 'lucide-angular';
 
-type BisonStatus = 'Available' | 'In Transit' | 'Maintenance' | 'Rest';
-type BisonHealth = 'Excellent' | 'Good' | 'Fair' | 'Poor';
+type BisonStatus = 'Disponible' | 'En camino' | 'Mantenimiento' | 'Descansando';
+type BisonHealth = 'Excelente' | 'Bueno' | 'Regular' | 'Malo';
 
 interface bisonData {
   id: number;
@@ -51,13 +51,13 @@ export class Bison {
       id: 1,
       name: 'Appa Jr.',
       age: 8,
-      status: 'Available',
-      health: 'Excellent',
-      location: 'Air Temple Island',
-      caretaker: 'Master Jinora',
+      status: 'Disponible',
+      health: 'Excelente',
+      location: 'Isla del Templo del Aire',
+      caretaker: 'Maestro Jinora',
       lastCheckup: '2024-01-15',
       flightHours: 1247,
-      specialization: 'Long Distance',
+      specialization: 'Largas distancias',
       weight: '10,000 lbs',
       wingspan: '30 ft',
     },
@@ -65,13 +65,13 @@ export class Bison {
       id: 2,
       name: 'Nimbus',
       age: 12,
-      status: 'In Transit',
-      health: 'Good',
-      location: 'En route to Fire Nation',
-      caretaker: 'Airbender Kai',
+      status: 'En camino',
+      health: 'Bueno',
+      location: 'De camino a la Nación del Fuego',
+      caretaker: 'Maestro del aire Kai',
       lastCheckup: '2024-01-10',
       flightHours: 1890,
-      specialization: 'Express Delivery',
+      specialization: 'Entrega express',
       weight: '9,500 lbs',
       wingspan: '28 ft',
     },
@@ -79,13 +79,13 @@ export class Bison {
       id: 3,
       name: 'Cloudy',
       age: 6,
-      status: 'Available',
-      health: 'Excellent',
-      location: 'Ba Sing Se Station',
-      caretaker: 'Master Opal',
+      status: 'Disponible',
+      health: 'Excelente',
+      location: 'Estacion Ba Sing Se ',
+      caretaker: 'Maestro Opal',
       lastCheckup: '2024-01-18',
       flightHours: 856,
-      specialization: 'Fragile Items',
+      specialization: 'Articulos frágiles',
       weight: '8,800 lbs',
       wingspan: '26 ft',
     },
@@ -93,13 +93,13 @@ export class Bison {
       id: 4,
       name: 'Thunder',
       age: 15,
-      status: 'Maintenance',
-      health: 'Fair',
-      location: 'Republic City Depot',
-      caretaker: 'Veteran Bumi',
+      status: 'Mantenimiento',
+      health: 'Regular',
+      location: 'Depósito de Ciudad República',
+      caretaker: 'Veterano Bumi',
       lastCheckup: '2024-01-05',
       flightHours: 2312,
-      specialization: 'Heavy Cargo',
+      specialization: 'Carga pesada',
       weight: '12,000 lbs',
       wingspan: '35 ft',
     },
@@ -125,9 +125,9 @@ export class Bison {
   });
 
   totalBison = computed(() => this.bisonData.length);
-  availableBison = computed(() => this.bisonData.filter(b => b.status === 'Available').length);
+  availableBison = computed(() => this.bisonData.filter(b => b.status === 'Disponible').length);
   needsAttentionBison = computed(
-    () => this.bisonData.filter(b => b.health === 'Fair' || b.health === 'Poor').length,
+    () => this.bisonData.filter(b => b.health === 'Regular' || b.health === 'Malo').length,
   );
   avgFlightHours = computed(() => {
     if (this.bisonData.length === 0) return 0;
@@ -155,13 +155,13 @@ export class Bison {
 
   getStatusColor(status: BisonStatus): string {
     switch (status) {
-      case 'Available':
+      case 'Disponible':
         return 'bg-green-100 text-green-800';
-      case 'In Transit':
+      case 'En camino':
         return 'bg-blue-100 text-blue-800';
-      case 'Maintenance':
+      case 'Mantenimiento':
         return 'bg-yellow-100 text-yellow-800';
-      case 'Rest':
+      case 'Descansando':
         return 'bg-purple-100 text-purple-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -170,13 +170,13 @@ export class Bison {
 
   getHealthColor(health: BisonHealth): string {
     switch (health) {
-      case 'Excellent':
+      case 'Excelente':
         return 'text-green-600';
-      case 'Good':
+      case 'Bueno':
         return 'text-blue-600';
-      case 'Fair':
+      case 'Regular':
         return 'text-yellow-600';
-      case 'Poor':
+      case 'Malo':
         return 'text-red-600';
       default:
         return 'text-gray-600';
