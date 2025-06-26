@@ -1,1 +1,163 @@
-<p class="text-red-500">caretaker works!</p>
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Caretaker Management</h1>
+      <p class="text-gray-600">Manage airbender caretakers and their assignments</p>
+    </div>
+    <a
+      routerLink="/admin/caretakers/new"
+      class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700"
+    >
+      <lucide-icon [img]="Plus" class="h-4 w-4 mr-2"></lucide-icon>
+      Add New Caretaker
+    </a>
+  </div>
+
+  <!-- Filters -->
+  <div class="border rounded-lg p-6">
+    <div class="grid md:grid-cols-4 gap-4">
+      <div class="relative">
+        <lucide-icon [img]="Search" class="absolute left-3 top-3 h-4 w-4 text-gray-400"></lucide-icon>
+        <input
+          placeholder="Search caretakers..."
+          [(ngModel)]="searchTerm"
+          class="pl-10 w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        />
+      </div>
+      <select
+        [(ngModel)]="statusFilter"
+        class="w-full flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="on leave">On Leave</option>
+        <option value="inactive">Inactive</option>
+      </select>
+      <select
+        [(ngModel)]="specializationFilter"
+        class="w-full flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <option value="all">All Specializations</option>
+        <option value="senior">Senior Airbender</option>
+        <option value="express">Express Operations</option>
+        <option value="fragile">Fragile Cargo</option>
+        <option value="heavy">Heavy Cargo</option>
+        <option value="stealth">Stealth Operations</option>
+      </select>
+      <button
+        (click)="clearFilters()"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 border"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Caretakers Grid -->
+  <div class="grid lg:grid-cols-2 gap-6">
+    @for (caretaker of filteredCaretakers(); track caretaker.id) {
+      <div class="border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <div class="p-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                <lucide-icon [img]="Users" class="h-6 w-6 text-blue-600"></lucide-icon>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">{{ caretaker.name }}</h3>
+                <p class="text-sm text-gray-500">{{ caretaker.specialization }}</p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold" [class]="getStatusColor(caretaker.status)">
+                {{ caretaker.status }}
+              </span>
+              <a
+                [routerLink]="['/admin/caretakers', caretaker.id, 'edit']"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium h-8 w-8 border"
+              >
+                <lucide-icon [img]="Edit" class="h-4 w-4"></lucide-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="px-6 pb-6 space-y-4">
+          <div class="grid grid-cols-1 gap-3">
+            <div class="flex items-center space-x-2">
+              <lucide-icon [img]="Mail" class="h-4 w-4 text-gray-500"></lucide-icon>
+              <span class="text-sm text-gray-600">{{ caretaker.email }}</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <lucide-icon [img]="Phone" class="h-4 w-4 text-gray-500"></lucide-icon>
+              <span class="text-sm text-gray-600">{{ caretaker.phone }}</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
+              <span class="text-sm text-gray-600">{{ caretaker.experience }} experience • {{ caretaker.schedule }}</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center space-x-2">
+              <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-500"></lucide-icon>
+              <span class="text-sm font-medium">Assigned Bison:</span>
+            </div>
+            <div class="flex flex-wrap gap-1">
+              @for (bison of caretaker.assignedBison; track $index) {
+                <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-semibold">{{ bison }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-sm font-medium">Certifications:</span>
+            <div class="flex flex-wrap gap-1">
+              @for (cert of caretaker.certifications; track $index) {
+                <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600">{{ cert }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-4 border-t">
+            <a [routerLink]="['/admin/caretakers', caretaker.id]" class="flex-1">
+              <button class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
+                View Profile
+              </button>
+            </a>
+            <button class="flex-1 w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
+              View Schedule
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Team Summary -->
+  <div class="border rounded-lg">
+    <div class="p-6">
+      <h3 class="text-lg font-bold">Team Summary</h3>
+    </div>
+    <div class="px-6 pb-6">
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-600">{{ teamSummary().total }}</div>
+          <div class="text-sm text-gray-600">Total Caretakers</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-green-600">{{ teamSummary().active }}</div>
+          <div class="text-sm text-gray-600">Active</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">{{ teamSummary().totalAssignments }}</div>
+          <div class="text-sm text-gray-600">Total Assignments</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-orange-600">{{ teamSummary().avgExperience }}</div>
+          <div class="text-sm text-gray-600">Avg Experience (years)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
