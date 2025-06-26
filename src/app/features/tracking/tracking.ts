@@ -54,20 +54,20 @@ export class Tracking {
     setTimeout(() => {
       this.orderData.set({
         id: trackingId,
-        status: 'in_transit',
-        from: 'Ba Sing Se, Earth Kingdom',
-        to: 'Republic City, United Republic',
+        status: 'En camino',
+        from: 'Ba Sing Se, Reino Tierra',
+        to: 'Ciudad republica, Republica Unida',
         bisonName: 'Appa Jr.',
-        caretaker: 'Master Jinora',
-        estimatedArrival: 'Tomorrow, 2:30 PM',
-        currentLocation: "Flying over Serpent's Pass",
+        caretaker: 'Maestro Jinora',
+        estimatedArrival: 'Mañana, 2:30 PM',
+        currentLocation: "Volando sobre el Paso de la Serpiente",
         timeline: [
-          { status: 'Order Placed', completed: true, time: '2 days ago' },
-          { status: 'Bison Assigned', completed: true, time: '1 day ago' },
-          { status: 'Pickup Completed', completed: true, time: '12 hours ago' },
-          { status: 'In Transit', completed: true, time: 'Current', active: true },
-          { status: 'Out for Delivery', completed: false, time: 'Tomorrow' },
-          { status: 'Delivered', completed: false, time: 'Tomorrow' },
+          { status: 'Pedido realizado', completed: true, time: 'Hace 2 días' },
+          { status: 'Bisonte asignado', completed: true, time: 'Hace un día' },
+          { status: 'Recogida completada', completed: true, time: 'Hace 12 horas' },
+          { status: 'En camino', completed: true, time: 'Current', active: true },
+          { status: 'Fuera de entrega', completed: false, time: 'Mañana' },
+          { status: 'Entregado', completed: false, time: 'Mañana' },
         ],
       });
       this.isLoading.set(false);
