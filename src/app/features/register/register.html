@@ -23,20 +23,24 @@
               <input type="text" id="firstName" formControlName="firstName"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required>
-              <div *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)"
-                class="text-red-500 text-xs italic">
+              @if (registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty ||
+              registerForm.get('firstName')?.touched)) {
+              <div class="text-red-500 text-xs italic">
                 Por favor inserta tu primer nombre.
               </div>
+              }
             </div>
             <div class="space-y-2">
               <label for="lastName" class="block text-sm font-medium text-gray-700">Apellido</label>
               <input type="text" id="lastName" formControlName="lastName"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 required>
-              <div *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)"
-                class="text-red-500 text-xs italic">
+              @if (registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty ||
+              registerForm.get('lastName')?.touched)) {
+              <div class="text-red-500 text-xs italic">
                 Por favor inserta tu apellido.
               </div>
+              }
             </div>
           </div>
 
@@ -45,10 +49,12 @@
             <input type="email" id="email" formControlName="email"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               required>
-            <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)"
-              class="text-red-500 text-xs italic">
+            @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty ||
+            registerForm.get('email')?.touched)) {
+            <div class="text-red-500 text-xs italic">
               Por favor ingresa un email valido.
             </div>
+            }
           </div>
 
           <div class="space-y-2">
@@ -62,10 +68,12 @@
               <option value="fire">Nación de Fuego</option>
               <option value="earth">Reino Tierra</option>
             </select>
-            <div *ngIf="registerForm.get('nation')?.invalid && (registerForm.get('nation')?.dirty || registerForm.get('nation')?.touched)"
-              class="text-red-500 text-xs italic">
+            @if (registerForm.get('nation')?.invalid && (registerForm.get('nation')?.dirty ||
+            registerForm.get('nation')?.touched)) {
+            <div class="text-red-500 text-xs italic">
               Por favor selecciona tu nación.
             </div>
+            }
           </div>
 
           <div class="space-y-2">
@@ -73,10 +81,12 @@
             <input type="text" id="city" formControlName="city"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="e.g., Ba Sing Se, Republic City" required>
-            <div *ngIf="registerForm.get('city')?.invalid && (registerForm.get('city')?.dirty || registerForm.get('city')?.touched)"
-              class="text-red-500 text-xs italic">
+            @if (registerForm.get('city')?.invalid && (registerForm.get('city')?.dirty ||
+            registerForm.get('city')?.touched)) {
+            <div class="text-red-500 text-xs italic">
               Por favor ingresa tu ciudad.
             </div>
+            }
           </div>
 
           <div class="space-y-2">
@@ -84,10 +94,12 @@
             <input type="password" id="password" formControlName="password"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               required>
-            <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)"
-              class="text-red-500 text-xs italic">
+            @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty ||
+            registerForm.get('password')?.touched)) {
+            <div class="text-red-500 text-xs italic">
               Por favor ingresa tu contraseña.
             </div>
+            }
           </div>
 
           <div class="space-y-2">
@@ -95,10 +107,13 @@
             <input type="password" id="confirmPassword" formControlName="confirmPassword"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               required>
-            <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)"
-              class="text-red-500 text-xs italic">
+
+            @if (registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty ||
+            registerForm.get('confirmPassword')?.touched)) {
+            <div class="text-red-500 text-xs italic">
               Por favor confirma tu contraseña.
             </div>
+            }
           </div>
 
           <button type="submit"
