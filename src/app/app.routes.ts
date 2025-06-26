@@ -14,5 +14,9 @@ export const routes: Routes = [
   { path: 'quote', component: Quote},
   { path: 'order', component: Order},
   { path: 'tracking', component: Tracking},
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES)
+  },
   { path: '**', redirectTo: 'home' },
 ];
