@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import {
   LucideAngularModule,
   Wind,
@@ -21,6 +21,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Admin {
+  private router = inject(Router);
+
   readonly Wind = Wind;
   readonly LayoutDashboard = LayoutDashboard;
   readonly Users = Users;
@@ -38,4 +40,9 @@ export class Admin {
     { name: 'Caretakers', href: '/admin/caretaker', icon: this.Users },
     { name: 'Orders', href: '/admin/order-management', icon: this.Package },
   ];
+
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
+
 }
