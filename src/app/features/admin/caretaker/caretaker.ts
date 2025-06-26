@@ -6,72 +6,72 @@ import { LucideAngularModule, Users, Plus, Search, Edit, Phone, Mail, Calendar, 
 const caretakersData = [
   {
     id: 1,
-    name: 'Master Jinora',
-    email: 'jinora@appahauling.com',
+    name: 'Maestra Jinora',
+    email: 'jinora@appaacarreos.com',
     phone: '+1 (555) 0101',
     status: 'Active',
     specialization: 'Senior Airbender',
     assignedBison: ['Appa Jr.', 'Whisper'],
-    experience: '15 years',
+    experience: '15 años',
     certifications: ['Master Airbender', 'Animal Care Specialist', 'Flight Safety'],
     schedule: 'Full-time',
-    location: 'Air Temple Island',
+    location: 'Isla del Templo del Aire',
     joinDate: '2019-03-15',
   },
   {
     id: 2,
-    name: 'Airbender Kai',
-    email: 'kai@appahauling.com',
+    name: 'Maestro del Aire Kai',
+    email: 'kai@appaacarreos.com',
     phone: '+1 (555) 0102',
     status: 'Active',
     specialization: 'Express Operations',
     assignedBison: ['Nimbus'],
-    experience: '8 years',
+    experience: '8 años',
     certifications: ['Airbender Level 3', 'Speed Flight Certified'],
     schedule: 'Full-time',
-    location: 'Republic City',
+    location: 'Ciudad República',
     joinDate: '2020-07-22',
   },
   {
     id: 3,
-    name: 'Master Opal',
-    email: 'opal@appahauling.com',
+    name: 'Maestra Opal',
+    email: 'opal@appaacarreos.com',
     phone: '+1 (555) 0103',
     status: 'Active',
     specialization: 'Fragile Cargo',
     assignedBison: ['Cloudy'],
-    experience: '12 years',
+    experience: '12 años',
     certifications: ['Master Airbender', 'Delicate Handling Specialist'],
     schedule: 'Full-time',
-    location: 'Ba Sing Se Station',
+    location: 'Estación Ba Sing Se',
     joinDate: '2018-11-08',
   },
   {
     id: 4,
-    name: 'Veteran Bumi',
-    email: 'bumi@appahauling.com',
+    name: 'Veterano Bumi',
+    email: 'bumi@appaacarreos.com',
     phone: '+1 (555) 0104',
     status: 'On Leave',
     specialization: 'Heavy Cargo',
     assignedBison: ['Thunder'],
-    experience: '25 years',
+    experience: '25 años',
     certifications: ['Master Airbender', 'Heavy Lift Certified', 'Veteran Status'],
     schedule: 'Part-time',
-    location: 'Republic City Depot',
+    location: 'Depósito de Ciudad República',
     joinDate: '2015-01-12',
   },
   {
     id: 5,
-    name: 'Master Ikki',
-    email: 'ikki@appahauling.com',
+    name: 'Maestra Ikki',
+    email: 'ikki@appaacarreos.com',
     phone: '+1 (555) 0105',
     status: 'Active',
     specialization: 'Stealth Operations',
     assignedBison: ['Whisper'],
-    experience: '10 years',
+    experience: '10 años',
     certifications: ['Master Airbender', 'Stealth Flight Certified'],
     schedule: 'Full-time',
-    location: 'Northern Air Temple',
+    location: 'Templo del Aire del Norte',
     joinDate: '2019-09-30',
   },
 ];
@@ -138,6 +138,72 @@ export class Caretaker {
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  }
+
+  getStatusTranslation(status: string): string {
+    switch (status) {
+      case 'Active':
+        return 'Activo';
+      case 'On Leave':
+        return 'Con Permiso';
+      case 'Inactive':
+        return 'Inactivo';
+      default:
+        return status;
+    }
+  }
+
+  getScheduleTranslation(schedule: string): string {
+    switch (schedule) {
+      case 'Full-time':
+        return 'Tiempo completo';
+      case 'Part-time':
+        return 'Medio tiempo';
+      default:
+        return schedule;
+    }
+  }
+
+  getCertificationTranslation(certification: string): string {
+    switch (certification) {
+      case 'Master Airbender':
+        return 'Maestro del Aire';
+      case 'Animal Care Specialist':
+        return 'Especialista en Cuidado Animal';
+      case 'Flight Safety':
+        return 'Seguridad de Vuelo';
+      case 'Airbender Level 3':
+        return 'Maestro del Aire Nivel 3';
+      case 'Speed Flight Certified':
+        return 'Certificado en Vuelo Rápido';
+      case 'Delicate Handling Specialist':
+        return 'Especialista en Manejo Delicado';
+      case 'Heavy Lift Certified':
+        return 'Certificado en Carga Pesada';
+      case 'Veteran Status':
+        return 'Estado Veterano';
+      case 'Stealth Flight Certified':
+        return 'Certificado en Vuelo Sigiloso';
+      default:
+        return certification;
+    }
+  }
+
+  getSpecializationTranslation(specialization: string): string {
+    switch (specialization) {
+      case 'Senior Airbender':
+        return 'Maestro del Aire Senior';
+      case 'Express Operations':
+        return 'Operaciones Express';
+      case 'Fragile Cargo':
+        return 'Carga Frágil';
+      case 'Heavy Cargo':
+        return 'Carga Pesada';
+      case 'Stealth Operations':
+        return 'Operaciones Sigilosas';
+      default:
+        return specialization;
     }
   }
 
