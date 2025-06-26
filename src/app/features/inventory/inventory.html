@@ -20,19 +20,19 @@
           <input
             type="text"
             placeholder="Buscar bisonte o cuidador"
-            class="pl-10 w-full border rounded py-2"
+            class="pl-10 w-full border rounded py-2 text-sm text-gray-900"
             [value]="searchTerm()"
             (input)="searchTerm.set($any($event.target).value || '')"
           />
         </div>
-        <select class="w-full border rounded py-2" [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value || 'all')">
+        <select class="w-full border rounded py-2 text-sm text-gray-900" [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value || 'all')">
           <option value="all">Todos los estados</option>
           <option value="disponible">Disponible</option>
           <option value="en camino">En camino</option>
           <option value="mantenimiento">Mantenimiento</option>
         </select>
         <select
-          class="w-full border rounded py-2"
+          class="w-full border rounded py-2 text-sm text-gray-900"
           [value]="specializationFilter()"
           (change)="specializationFilter.set($any($event.target).value || 'all')"
         >
@@ -44,7 +44,7 @@
           <option value="discreta">Entrega discreta</option>
           <option value="pasajeros  ">Transporte de pasajeros</option>
         </select>
-        <button class="w-full border rounded py-2 bg-gray-100 hover:bg-gray-200" (click)="clearFilters()">Limpiar filtros</button>
+        <button class="w-full border rounded py-2 bg-gray-100 hover:bg-gray-200 text-sm text-gray-900" (click)="clearFilters()">Limpiar filtros</button>
       </div>
     </div>
 
