@@ -2,15 +2,15 @@
   <!-- Header -->
   <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900">Bison Management</h1>
-      <p class="text-gray-600">Manage your flying bison fleet and their health status</p>
+      <h1 class="text-3xl font-bold text-gray-900">Administración de bisontes</h1>
+      <p class="text-gray-600">Gestiona tu flota de bisontes voladores y su estado de salud</p>
     </div>
     <a routerLink="/admin/bison/new" class="w-full md:w-auto">
       <button
         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center justify-center"
       >
         <lucide-icon [img]="Plus" class="h-4 w-4 mr-2"></lucide-icon>
-        Add New Bison
+        Agregar nuevo bisonte
       </button>
     </a>
   </div>
@@ -21,7 +21,7 @@
       <div class="relative">
         <lucide-icon [img]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"></lucide-icon>
         <input
-          placeholder="Search bison or caretaker..."
+          placeholder="Buscar bisonte o cuidador..."
           [value]="searchTerm()"
           (input)="updateSearchTerm($event)"
           class="pl-10 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
@@ -32,28 +32,28 @@
         (change)="updateStatusFilter($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       >
-        <option value="all">All Status</option>
-        <option value="Available">Available</option>
-        <option value="In Transit">In Transit</option>
-        <option value="Maintenance">Maintenance</option>
-        <option value="Rest">Rest</option>
+        <option value="all">Todos los estados</option>
+        <option value="Disponible">Disponible</option>
+        <option value="En camino">En camino</option>
+        <option value="Mantenimiento">Mantenimiento/option>
+        <option value="Descansando">Descansando</option>
       </select>
       <select
         [value]="healthFilter()"
         (change)="updateHealthFilter($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       >
-        <option value="all">All Health Status</option>
-        <option value="Excellent">Excellent</option>
-        <option value="Good">Good</option>
-        <option value="Fair">Fair</option>
-        <option value="Poor">Poor</option>
+        <option value="all">Todos los estados de salud</option>
+        <option value="Excelente">Excelente/option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Malo">Malo</option>
       </select>
       <button
         (click)="clearFilters()"
         class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
       >
-        Clear Filters
+        Limpiar filtros
       </button>
     </div>
   </div>
@@ -68,7 +68,7 @@
               <lucide-icon [img]="Wind" class="h-8 w-8 text-blue-600"></lucide-icon>
               <div>
                 <h3 class="text-xl font-bold">{{ bison.name }}</h3>
-                <p class="text-sm text-gray-500">Age: {{ bison.age }} years • {{ bison.specialization }}</p>
+                <p class="text-sm text-gray-500">Edad: {{ bison.age }} años • {{ bison.specialization }}</p>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -89,7 +89,7 @@
               <div class="flex items-center space-x-2">
                 <lucide-icon [img]="Activity" class="h-4 w-4" [class]="getHealthColor(bison.health)"></lucide-icon>
                 <span class="text-sm">
-                  Health: <span class="font-medium" [class]="getHealthColor(bison.health)">{{ bison.health }}</span>
+                  Salud: <span class="font-medium" [class]="getHealthColor(bison.health)">{{ bison.health }}</span>
                 </span>
               </div>
               <div class="flex items-center space-x-2">
@@ -104,25 +104,25 @@
             <div class="space-y-3">
               <div class="flex items-center space-x-2">
                 <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
-                <span class="text-sm text-gray-600">Last checkup: {{ formatDate(bison.lastCheckup) }}</span>
+                <span class="text-sm text-gray-600">Ultimo chequeo: {{ formatDate(bison.lastCheckup) }}</span>
               </div>
               <div class="text-sm text-gray-600">
-                Flight hours: <span class="font-medium">{{ bison.flightHours.toLocaleString() }}</span>
+                Horas de vuelo: <span class="font-medium">{{ bison.flightHours.toLocaleString() }}</span>
               </div>
-              <div class="text-sm text-gray-600">Weight: <span class="font-medium">{{ bison.weight }}</span></div>
+              <div class="text-sm text-gray-600">Peso: <span class="font-medium">{{ bison.weight }}</span></div>
             </div>
           </div>
           <div class="flex space-x-2 pt-4 border-t">
             <a [routerLink]="['/admin/bison', bison.id]" class="flex-1">
               <button class="w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                View Details
+                Ver detalles
               </button>
             </a>
             <button
               class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="bison.status === 'Maintenance'"
+              [disabled]="bison.status === 'Mantenimiento'"
             >
-              Schedule Checkup
+              Programar chequeo
             </button>
           </div>
         </div>
@@ -132,23 +132,23 @@
 
   <!-- Fleet Summary -->
   <div class="p-6 bg-white rounded-lg shadow-md">
-    <h3 class="text-lg font-medium leading-6 text-gray-900">Fleet Summary</h3>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Resumen de la flota</h3>
     <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-6">
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-blue-600">{{ totalBison() }}</div>
-        <div class="text-sm text-gray-600">Total Bison</div>
+        <div class="text-sm text-gray-600">Total de bisontes</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-green-600">{{ availableBison() }}</div>
-        <div class="text-sm text-gray-600">Available</div>
+        <div class="text-sm text-gray-600">Disponible</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-yellow-600">{{ needsAttentionBison() }}</div>
-        <div class="text-sm text-gray-600">Need Attention</div>
+        <div class="text-sm text-gray-600">Necesita Atención</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-purple-600">{{ avgFlightHours().toLocaleString() }}</div>
-        <div class="text-sm text-gray-600">Avg Flight Hours</div>
+        <div class="text-sm text-gray-600">Promedio de horas de vuelo</div>
       </div>
     </div>
   </div>
