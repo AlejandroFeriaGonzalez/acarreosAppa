@@ -1,0 +1,214 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4">
+                    </path>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Agregar Nuevo Bisonte</h2>
+            <p class="mt-2 text-gray-600">Registra un nuevo bisonte en el sistema de acarreos</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+            <form (ngSubmit)="onSubmit()" #bisonForm="ngForm" class="p-8 space-y-6">
+                <!-- Nombre -->
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-medium text-gray-700">
+                        Nombre del Bisonte
+                    </label>
+                    <input type="text" id="name" name="name" [(ngModel)]="bison.name" required #name="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors placeholder-gray-400"
+                        placeholder="Ej: Thunder, Storm, Appa Jr.">
+                    <div *ngIf="name.invalid && name.touched" class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>El nombre es requerido</span>
+                    </div>
+                </div>
+
+                <!-- Edad y Peso -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="age" class="block text-sm font-medium text-gray-700">
+                            Edad (años)
+                        </label>
+                        <input type="number" id="age" name="age" [(ngModel)]="bison.age" required min="0" max="30"
+                            #age="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            placeholder="0">
+                        <div *ngIf="age.invalid && age.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>La edad es requerida (0-30 años)</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="weight" class="block text-sm font-medium text-gray-700">
+                            Peso (kg)
+                        </label>
+                        <input type="number" id="weight" name="weight" [(ngModel)]="bison.weight" required min="0"
+                            #weight="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            placeholder="500">
+                        <div *ngIf="weight.invalid && weight.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>El peso es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Raza y Género -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="breed" class="block text-sm font-medium text-gray-700">
+                            Raza
+                        </label>
+                        <select id="breed" name="breed" [(ngModel)]="bison.breed" required #breed="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
+                            <option value="">Selecciona una raza</option>
+                            <option value="American Bison">🦬 Bisonte Americano</option>
+                            <option value="Plains Bison">🌾 Bisonte de las Praderas</option>
+                            <option value="Wood Bison">🌲 Bisonte del Bosque</option>
+                            <option value="European Bison">🏰 Bisonte Europeo</option>
+                        </select>
+                        <div *ngIf="breed.invalid && breed.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>La raza es requerida</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="gender" class="block text-sm font-medium text-gray-700">
+                            Género
+                        </label>
+                        <select id="gender" name="gender" [(ngModel)]="bison.gender" required #gender="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
+                            <option value="">Selecciona el género</option>
+                            <option value="male">♂️ Macho</option>
+                            <option value="female">♀️ Hembra</option>
+                        </select>
+                        <div *ngIf="gender.invalid && gender.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>El género es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fecha de Nacimiento -->
+                <div class="space-y-2">
+                    <label for="dateOfBirth" class="block text-sm font-medium text-gray-700">
+                        Fecha de Nacimiento
+                    </label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="bison.dateOfBirth" required
+                        #dateOfBirth="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                    <div *ngIf="dateOfBirth.invalid && dateOfBirth.touched"
+                        class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>La fecha de nacimiento es requerida</span>
+                    </div>
+                </div>
+
+                <!-- Estado de Salud -->
+                <div class="space-y-2">
+                    <label for="healthStatus" class="block text-sm font-medium text-gray-700">
+                        Estado de Salud
+                    </label>
+                    <select id="healthStatus" name="healthStatus" [(ngModel)]="bison.healthStatus" required
+                        #healthStatus="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
+                        <option value="">Selecciona el estado</option>
+                        <option value="healthy">✅ Saludable</option>
+                        <option value="sick">🤒 Enfermo</option>
+                        <option value="injured">🩹 Herido</option>
+                    </select>
+                    <div *ngIf="healthStatus.invalid && healthStatus.touched"
+                        class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>El estado de salud es requerido</span>
+                    </div>
+                </div>
+
+                <!-- Ubicación Actual -->
+                <div class="space-y-2">
+                    <label for="currentLocation" class="block text-sm font-medium text-gray-700">
+                        Ubicación Actual
+                    </label>
+                    <input type="text" id="currentLocation" name="currentLocation" [(ngModel)]="bison.currentLocation"
+                        required #currentLocation="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors placeholder-gray-400"
+                        placeholder="Ej: Campo A, Establo 1, Corral Norte">
+                    <div *ngIf="currentLocation.invalid && currentLocation.touched"
+                        class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>La ubicación actual es requerida</span>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+                    <button type="button" (click)="onCancel()"
+                        class="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 font-medium">
+                        <span class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <span>Cancelar</span>
+                        </span>
+                    </button>
+                    <button type="submit" [disabled]="!bisonForm.form.valid"
+                        class="w-full sm:flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-200 font-medium shadow-lg disabled:shadow-none">
+                        <span class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <span>Agregar Bisonte</span>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

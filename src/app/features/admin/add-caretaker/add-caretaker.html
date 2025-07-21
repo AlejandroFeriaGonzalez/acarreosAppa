@@ -1,0 +1,156 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Agregar Nuevo Cuidador</h2>
+            <p class="mt-2 text-gray-600">Registra un nuevo cuidador especializado en el cuidado de bisontes</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+            <form (ngSubmit)="onSubmit()" #caretakerForm="ngForm" class="p-8 space-y-6">
+                <!-- Nombre -->
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-medium text-gray-700">
+                        Nombre Completo
+                    </label>
+                    <input type="text" id="name" name="name" [(ngModel)]="caretaker.name" required #name="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors placeholder-gray-400"
+                        placeholder="Ej: Juan Pérez García">
+                    <div *ngIf="name.invalid && name.touched" class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>El nombre es requerido</span>
+                    </div>
+                </div>
+
+                <!-- Email y Teléfono -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700">
+                            Correo Electrónico
+                        </label>
+                        <input type="email" id="email" name="email" [(ngModel)]="caretaker.email" required email
+                            #email="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors placeholder-gray-400"
+                            placeholder="juan@example.com">
+                        <div *ngIf="email.invalid && email.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span *ngIf="email.errors?.['required']">El email es requerido</span>
+                            <span *ngIf="email.errors?.['email']">El formato del email no es válido</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="phone" class="block text-sm font-medium text-gray-700">
+                            Teléfono
+                        </label>
+                        <input type="tel" id="phone" name="phone" [(ngModel)]="caretaker.phone" required
+                            #phone="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors placeholder-gray-400"
+                            placeholder="+1 (555) 123-4567">
+                        <div *ngIf="phone.invalid && phone.touched"
+                            class="flex items-center space-x-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>El teléfono es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiencia -->
+                <div class="space-y-2">
+                    <label for="experience" class="block text-sm font-medium text-gray-700">
+                        Años de Experiencia
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="experience" name="experience" [(ngModel)]="caretaker.experience"
+                            required min="0" #experience="ngModel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                            placeholder="0">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 text-sm">años</span>
+                        </div>
+                    </div>
+                    <div *ngIf="experience.invalid && experience.touched"
+                        class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Los años de experiencia son requeridos</span>
+                    </div>
+                </div>
+
+                <!-- Especialización -->
+                <div class="space-y-2">
+                    <label for="specialization" class="block text-sm font-medium text-gray-700">
+                        Especialización
+                    </label>
+                    <select id="specialization" name="specialization" [(ngModel)]="caretaker.specialization" required
+                        #specialization="ngModel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white">
+                        <option value="">Selecciona una especialización</option>
+                        <option value="alimentacion">🥕 Alimentación y Nutrición</option>
+                        <option value="veterinaria">🩺 Cuidados Veterinarios</option>
+                        <option value="entrenamiento">🎯 Entrenamiento y Adiestramiento</option>
+                        <option value="limpieza">🧹 Limpieza y Mantenimiento</option>
+                        <option value="general">🔧 Cuidado General</option>
+                    </select>
+                    <div *ngIf="specialization.invalid && specialization.touched"
+                        class="flex items-center space-x-2 text-red-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>La especialización es requerida</span>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+                    <button type="button" (click)="onCancel()"
+                        class="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 font-medium">
+                        <span class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <span>Cancelar</span>
+                        </span>
+                    </button>
+                    <button type="submit" [disabled]="!caretakerForm.form.valid"
+                        class="w-full sm:flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-200 font-medium shadow-lg disabled:shadow-none">
+                        <span class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <span>Agregar Cuidador</span>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
