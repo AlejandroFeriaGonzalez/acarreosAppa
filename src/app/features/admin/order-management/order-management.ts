@@ -33,6 +33,12 @@ export class OrderManagement {
   loading = signal(true);
   error = signal<string | null>(null);
 
+  // Estado para edición de orden
+  selectedOrderId = signal<number | null>(null);
+  updating = signal(false);
+  updateError = signal<string | null>(null);
+  updateSuccess = signal<string | null>(null);
+
   constructor() {
     effect(() => {
       this.orderService.getOrders().subscribe({
@@ -46,6 +52,61 @@ export class OrderManagement {
         }
       });
     });
+  }
+
+  selectOrderToUpdate(orderId: number): void {
+    this.selectedOrderId.set(orderId);
+    this.updateError.set(null);
+    this.updateSuccess.set(null);
+  }
+
+  updateOrder(orderId: number, changes: { observaciones: string; estado: string }): void {
+    this.updating.set(true);
+    this.updateError.set(null);
+    this.updateSuccess.set(null);
+    // Busca la orden actual
+    const order = this.ordersData().find(o => o.id === orderId);
+    const itemId = order?.tbl_detalle_items[0]?.id;
+    // Si solo cambia el estado, actualiza solo el item
+    if (itemId) {
+      this.orderService.updateOrderItem(orderId, { estado: changes.estado }).subscribe({
+        next: (orderWithUpdatedItem) => {
+          // Si también cambió observaciones, actualiza la orden principal
+          if (order && order.observaciones !== changes.observaciones) {
+            this.orderService.updateOrder(orderId, { observaciones: changes.observaciones }).subscribe({
+              next: (updatedOrder) => {
+                const updatedList = this.ordersData().map(o =>
+                  o.id === orderWithUpdatedItem.id ? orderWithUpdatedItem : o
+                );
+                this.ordersData.set(updatedList);
+                this.updating.set(false);
+                this.updateSuccess.set('Order updated successfully');
+                this.selectedOrderId.set(null);
+              },
+              error: (err) => {
+                this.updateError.set(err.message ?? 'Error updating order');
+                this.updating.set(false);
+              }
+            });
+          } else {
+            const updatedList = this.ordersData().map(o =>
+              o.id === orderWithUpdatedItem.id ? orderWithUpdatedItem : o
+            );
+            this.ordersData.set(updatedList);
+            this.updating.set(false);
+            this.updateSuccess.set('Order updated successfully');
+            this.selectedOrderId.set(null);
+          }
+        },
+        error: (err) => {
+          this.updateError.set(err.message ?? 'Error updating item');
+          this.updating.set(false);
+        }
+      });
+    } else {
+      this.updateError.set('No item found to update');
+      this.updating.set(false);
+    }
   }
 
   filteredOrders = computed(() => {

@@ -48,6 +48,12 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  // solo se tiene un item por orden
+  updateOrderItem(orderId: number, item: Partial<Order['tbl_detalle_items'][0]>): Observable<Order> {
+    return this.http.put<Order>(`http://localhost:3001/detalle_items/${orderId}/`, item)
+      .pipe(catchError(this.handleError));
+  }
+
   // Manejo de errores centralizado
   private handleError(error: any) {
     let errorMessage = '';

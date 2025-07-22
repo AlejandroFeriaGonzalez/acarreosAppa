@@ -80,11 +80,18 @@
                     {{ order.tbl_detalle_items[0].estado.replace('_', ' ') }}
                   </span>
                 }
-                <a [routerLink]="['/admin/orders', order.id, 'edit']">
+                <!-- <a [routerLink]="['/admin/orders', order.id, 'edit']">
                   <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-9 w-9">
                     <lucide-icon [img]="Edit" class="h-4 w-4"></lucide-icon>
                   </button>
-                </a>
+                </a> -->
+                <button
+                  (click)="selectOrderToUpdate(order.id)"
+                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-blue-600 bg-blue-50 hover:bg-blue-100 h-9 w-9 ml-2"
+                  [disabled]="updating()"
+                >
+                  <lucide-icon [img]="Edit" class="h-4 w-4 text-blue-600"></lucide-icon>
+                </button>
               </div>
             </div>
           </div>
@@ -144,18 +151,52 @@
             </div>
 
             <div class="flex space-x-2 mt-6 pt-4 border-t">
-              <a [routerLink]="['/admin/orders', order.id]" class="flex-1">
-                <button class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
-                  View Details
-                </button>
-              </a>
-              @if (order.tbl_detalle_items[0].estado === 'pending') {
+              <!-- @if (order.tbl_detalle_items[0].estado === 'pending') {
                 <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">Assign Bison</button>
-              }
-              @if (order.tbl_detalle_items[0].estado === 'in_transit') {
+              } -->
+              <!-- @if (order.tbl_detalle_items[0].estado === 'in_transit') {
                 <button class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
                   Update Status
                 </button>
+              } -->
+              @if (selectedOrderId() === order.id) {
+                @if (!updateSuccess()) {
+                  <form
+                    (ngSubmit)="updateOrder(order.id, { observaciones: order.observaciones, estado: order.tbl_detalle_items[0].estado })"
+                    class="flex-1 flex flex-col space-y-2 mt-2"
+                  >
+                    <input
+                      class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      [(ngModel)]="order.observaciones"
+                      name="observaciones"
+                      placeholder="Update Observaciones"
+                    />
+                    <select
+                      class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      [(ngModel)]="order.tbl_detalle_items[0].estado"
+                      name="estado"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="scheduled">Scheduled</option>
+                      <option value="in_transit">In Transit</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                    <button
+                      type="submit"
+                      class="bg-green-600 hover:bg-green-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2"
+                      [disabled]="updating()"
+                    >
+                      Save
+                    </button>
+                    @if (updateError()) {
+                      <div class="text-sm text-red-600">{{ updateError() }}</div>
+                    }
+                  </form>
+                }
+                @if (updateSuccess()) {
+                  <div class="text-sm text-green-600">{{ updateSuccess() }}</div>
+                }
               }
             </div>
           </div>
