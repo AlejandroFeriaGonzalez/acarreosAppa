@@ -84,10 +84,10 @@
                         <select id="breed" name="breed" [(ngModel)]="bison.breed" required #breed="ngModel"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
                             <option value="">Selecciona una raza</option>
-                            <option value="American Bison">🦬 Bisonte Americano</option>
-                            <option value="Plains Bison">🌾 Bisonte de las Praderas</option>
-                            <option value="Wood Bison">🌲 Bisonte del Bosque</option>
-                            <option value="European Bison">🏰 Bisonte Europeo</option>
+                            <option value="American Bison">Bisonte Americano</option>
+                            <option value="Plains Bison">Bisonte de las Praderas</option>
+                            <option value="Wood Bison">Bisonte del Bosque</option>
+                            <option value="European Bison">Bisonte Europeo</option>
                         </select>
                         <div *ngIf="breed.invalid && breed.touched"
                             class="flex items-center space-x-2 text-red-600 text-sm">
@@ -107,8 +107,8 @@
                         <select id="gender" name="gender" [(ngModel)]="bison.gender" required #gender="ngModel"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
                             <option value="">Selecciona el género</option>
-                            <option value="male">♂️ Macho</option>
-                            <option value="female">♀️ Hembra</option>
+                            <option value="male">Macho</option>
+                            <option value="female">Hembra</option>
                         </select>
                         <div *ngIf="gender.invalid && gender.touched"
                             class="flex items-center space-x-2 text-red-600 text-sm">
@@ -150,9 +150,9 @@
                         #healthStatus="ngModel"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
                         <option value="">Selecciona el estado</option>
-                        <option value="healthy">✅ Saludable</option>
-                        <option value="sick">🤒 Enfermo</option>
-                        <option value="injured">🩹 Herido</option>
+                        <option value="healthy">Saludable</option>
+                        <option value="sick">Enfermo</option>
+                        <option value="injured">Herido</option>
                     </select>
                     <div *ngIf="healthStatus.invalid && healthStatus.touched"
                         class="flex items-center space-x-2 text-red-600 text-sm">
