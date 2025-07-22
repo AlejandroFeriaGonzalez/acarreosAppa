@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   LucideAngularModule,
@@ -11,32 +12,16 @@ import {
   Activity,
   Calendar,
 } from 'lucide-angular';
-
-type BisonStatus = 'Available' | 'In Transit' | 'Maintenance' | 'Rest';
-type BisonHealth = 'Excellent' | 'Good' | 'Fair' | 'Poor';
-
-interface bisonData {
-  id: number;
-  name: string;
-  age: number;
-  status: BisonStatus;
-  health: BisonHealth;
-  location: string;
-  caretaker: string;
-  lastCheckup: string;
-  flightHours: number;
-  specialization: string;
-  weight: string;
-  wingspan: string;
-}
+import { BisonService } from '../../../core/services/bison.service';
+import { Bison } from '../../../core/models/bison.model';
 
 @Component({
   selector: 'app-bison',
-  imports: [LucideAngularModule, RouterLink],
+  imports: [CommonModule, LucideAngularModule, RouterLink],
   templateUrl: './bison.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Bison {
+export class BisonComponent {
   readonly Wind = Wind;
   readonly Plus = Plus;
   readonly Search = Search;
@@ -46,93 +31,49 @@ export class Bison {
   readonly Activity = Activity;
   readonly Calendar = Calendar;
 
-  readonly bisonData: readonly bisonData[] = [
-    {
-      id: 1,
-      name: 'Appa Jr.',
-      age: 8,
-      status: 'Available',
-      health: 'Excellent',
-      location: 'Air Temple Island',
-      caretaker: 'Master Jinora',
-      lastCheckup: '2024-01-15',
-      flightHours: 1247,
-      specialization: 'Long Distance',
-      weight: '10,000 lbs',
-      wingspan: '30 ft',
-    },
-    {
-      id: 2,
-      name: 'Nimbus',
-      age: 12,
-      status: 'In Transit',
-      health: 'Good',
-      location: 'En route to Fire Nation',
-      caretaker: 'Airbender Kai',
-      lastCheckup: '2024-01-10',
-      flightHours: 1890,
-      specialization: 'Express Delivery',
-      weight: '9,500 lbs',
-      wingspan: '28 ft',
-    },
-    {
-      id: 3,
-      name: 'Cloudy',
-      age: 6,
-      status: 'Available',
-      health: 'Excellent',
-      location: 'Ba Sing Se Station',
-      caretaker: 'Master Opal',
-      lastCheckup: '2024-01-18',
-      flightHours: 856,
-      specialization: 'Fragile Items',
-      weight: '8,800 lbs',
-      wingspan: '26 ft',
-    },
-    {
-      id: 4,
-      name: 'Thunder',
-      age: 15,
-      status: 'Maintenance',
-      health: 'Fair',
-      location: 'Republic City Depot',
-      caretaker: 'Veteran Bumi',
-      lastCheckup: '2024-01-05',
-      flightHours: 2312,
-      specialization: 'Heavy Cargo',
-      weight: '12,000 lbs',
-      wingspan: '35 ft',
-    },
-  ];
+  private bisonService = inject(BisonService);
+
+  bisons = signal<Bison[]>([]);
+  loading = signal(true);
+  error = signal<string | null>(null);
 
   searchTerm = signal('');
-  statusFilter = signal<BisonStatus | 'all'>('all');
-  healthFilter = signal<BisonHealth | 'all'>('all');
+  statusFilter = signal('all');
+  healthFilter = signal('all');
+
+  constructor() {
+    this.bisonService.getBisons().subscribe({
+      next: (bisons: Bison[]) => {
+        this.bisons.set(bisons);
+        this.loading.set(false);
+      },
+      error: (err: unknown) => {
+        this.error.set((err as Error).message ?? 'Error desconocido');
+        this.loading.set(false);
+      }
+    });
+  }
 
   filteredBison = computed(() => {
     const term = this.searchTerm().toLowerCase();
     const status = this.statusFilter();
     const health = this.healthFilter();
-
-    return this.bisonData.filter(bison => {
-      const matchesSearch =
-        bison.name.toLowerCase().includes(term) || bison.caretaker.toLowerCase().includes(term);
-      const matchesStatus = status === 'all' || bison.status === status;
-      const matchesHealth = health === 'all' || bison.health === health;
-
+    return this.bisons().filter(bison => {
+      const matchesSearch = bison.nombre.toLowerCase().includes(term);
+      const matchesStatus = status === 'all' || bison.estado.toLowerCase() === status.toLowerCase();
+      const matchesHealth = health === 'all' || bison.salud.toLowerCase() === health.toLowerCase();
       return matchesSearch && matchesStatus && matchesHealth;
     });
   });
 
-  totalBison = computed(() => this.bisonData.length);
-  availableBison = computed(() => this.bisonData.filter(b => b.status === 'Available').length);
-  needsAttentionBison = computed(
-    () => this.bisonData.filter(b => b.health === 'Fair' || b.health === 'Poor').length,
-  );
+  totalBison = computed(() => this.bisons().length);
+  availableBison = computed(() => this.bisons().filter(b => b.estado === 'disponible').length);
+  needsAttentionBison = computed(() => this.bisons().filter(b => b.salud === 'regular' || b.salud === 'mala').length);
   avgFlightHours = computed(() => {
-    if (this.bisonData.length === 0) return 0;
-    const totalHours = this.bisonData.reduce((sum, b) => sum + b.flightHours, 0);
-    return Math.round(totalHours / this.bisonData.length);
+    const bisons = this.bisons();
+    if (bisons.length === 0) return 0;
+    const totalHours = bisons.reduce((sum, b) => sum + (b.horas_vuelo || 0), 0);
+    return Math.round(totalHours / bisons.length);
   });
 
   updateSearchTerm(event: Event): void {
@@ -140,11 +81,11 @@ export class Bison {
   }
 
   updateStatusFilter(event: Event): void {
-    this.statusFilter.set((event.target as HTMLSelectElement).value as BisonStatus | 'all');
+    this.statusFilter.set((event.target as HTMLSelectElement).value);
   }
 
   updateHealthFilter(event: Event): void {
-    this.healthFilter.set((event.target as HTMLSelectElement).value as BisonHealth | 'all');
+    this.healthFilter.set((event.target as HTMLSelectElement).value);
   }
 
   clearFilters(): void {
@@ -153,37 +94,37 @@ export class Bison {
     this.healthFilter.set('all');
   }
 
-  getStatusColor(status: BisonStatus): string {
-    switch (status) {
-      case 'Available':
+  getStatusColor(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'disponible':
         return 'bg-green-100 text-green-800';
-      case 'In Transit':
+      case 'en camino':
         return 'bg-blue-100 text-blue-800';
-      case 'Maintenance':
+      case 'mantenimiento':
         return 'bg-yellow-100 text-yellow-800';
-      case 'Rest':
+      case 'descanso':
         return 'bg-purple-100 text-purple-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
   }
 
-  getHealthColor(health: BisonHealth): string {
-    switch (health) {
-      case 'Excellent':
+  getHealthColor(health: string): string {
+    switch (health.toLowerCase()) {
+      case 'excelente':
         return 'text-green-600';
-      case 'Good':
+      case 'buena':
         return 'text-blue-600';
-      case 'Fair':
+      case 'regular':
         return 'text-yellow-600';
-      case 'Poor':
+      case 'mala':
         return 'text-red-600';
       default:
         return 'text-gray-600';
     }
   }
 
-  formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString();
+  formatDate(date: Date): string {
+    return new Date(date).toLocaleDateString();
   }
 }

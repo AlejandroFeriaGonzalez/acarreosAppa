@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Admin } from './admin';
-import { Bison } from './bison/bison';
+import { BisonComponent } from './bison/bison';
 import { CaretakerComponent } from './caretaker/caretaker';
 import { OrderManagement } from './order-management/order-management';
 import { Dashboard } from './dashboard/dashboard';
@@ -12,7 +12,7 @@ export const ADMIN_ROUTES: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: Dashboard },
-      { path: 'bison', component: Bison },
+      { path: 'bison', component: BisonComponent },
       { path: 'caretaker', component: CaretakerComponent },
       { path: 'order-management', component: OrderManagement },
     ],

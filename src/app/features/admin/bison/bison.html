@@ -58,8 +58,12 @@
     </div>
   </div>
 
+  <!-- Mensaje de carga y error -->
+  <div *ngIf="loading()" class="text-center py-8 text-gray-500">Cargando bisontes...</div>
+  <div *ngIf="error()" class="text-center py-8 text-red-500">{{ error() }}</div>
+
   <!-- Bison Grid -->
-  <div class="grid lg:grid-cols-2 gap-6">
+  <div class="grid lg:grid-cols-2 gap-6" *ngIf="!loading() && !error()">
     @for (bison of filteredBison(); track bison.id) {
       <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
         <div class="p-6">
@@ -67,13 +71,13 @@
             <div class="flex items-center space-x-3">
               <lucide-icon [img]="Wind" class="h-8 w-8 text-blue-600"></lucide-icon>
               <div>
-                <h3 class="text-xl font-bold">{{ bison.name }}</h3>
-                <p class="text-sm text-gray-500">Age: {{ bison.age }} years • {{ bison.specialization }}</p>
+                <h3 class="text-xl font-bold">{{ bison.nombre }}</h3>
+                <p class="text-sm text-gray-500">Edad: {{ bison.edad }} años • Peso: {{ bison.peso }}</p>
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full" [class]="getStatusColor(bison.status)">
-                {{ bison.status }}
+              <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full" [class]="getStatusColor(bison.estado)">
+                {{ bison.estado }}
               </span>
               <a [routerLink]="['/admin/bison', bison.id, 'edit']">
                 <button class="p-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
@@ -87,42 +91,42 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-3">
               <div class="flex items-center space-x-2">
-                <lucide-icon [img]="Activity" class="h-4 w-4" [class]="getHealthColor(bison.health)"></lucide-icon>
+                <lucide-icon [img]="Activity" class="h-4 w-4" [class]="getHealthColor(bison.salud)"></lucide-icon>
                 <span class="text-sm">
-                  Health: <span class="font-medium" [class]="getHealthColor(bison.health)">{{ bison.health }}</span>
+                  Salud: <span class="font-medium" [class]="getHealthColor(bison.salud)">{{ bison.salud }}</span>
                 </span>
               </div>
               <div class="flex items-center space-x-2">
                 <lucide-icon [img]="MapPin" class="h-4 w-4 text-gray-500"></lucide-icon>
-                <span class="text-sm text-gray-600">{{ bison.location }}</span>
+                <span class="text-sm text-gray-600">{{ bison.habitat }}</span>
               </div>
               <div class="flex items-center space-x-2">
                 <lucide-icon [img]="Heart" class="h-4 w-4 text-red-500"></lucide-icon>
-                <span class="text-sm text-gray-600">{{ bison.caretaker }}</span>
+                <span class="text-sm text-gray-600">Cuidador ID: {{ bison.cuidadorId }}</span>
               </div>
             </div>
             <div class="space-y-3">
               <div class="flex items-center space-x-2">
                 <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
-                <span class="text-sm text-gray-600">Last checkup: {{ formatDate(bison.lastCheckup) }}</span>
+                <span class="text-sm text-gray-600">Último chequeo: {{ formatDate(bison.ultimo_chequeo) }}</span>
               </div>
               <div class="text-sm text-gray-600">
-                Flight hours: <span class="font-medium">{{ bison.flightHours.toLocaleString() }}</span>
+                Horas de vuelo: <span class="font-medium">{{ bison.horas_vuelo }}</span>
               </div>
-              <div class="text-sm text-gray-600">Weight: <span class="font-medium">{{ bison.weight }}</span></div>
+              <div class="text-sm text-gray-600">Peso: <span class="font-medium">{{ bison.peso }}</span></div>
             </div>
           </div>
           <div class="flex space-x-2 pt-4 border-t">
             <a [routerLink]="['/admin/bison', bison.id]" class="flex-1">
               <button class="w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                View Details
+                Ver Detalles
               </button>
             </a>
             <button
               class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="bison.status === 'Maintenance'"
+              [disabled]="bison.estado === 'mantenimiento'"
             >
-              Schedule Checkup
+              Agendar Chequeo
             </button>
           </div>
         </div>
@@ -132,23 +136,23 @@
 
   <!-- Fleet Summary -->
   <div class="p-6 bg-white rounded-lg shadow-md">
-    <h3 class="text-lg font-medium leading-6 text-gray-900">Fleet Summary</h3>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Resumen de Flota</h3>
     <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-6">
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-blue-600">{{ totalBison() }}</div>
-        <div class="text-sm text-gray-600">Total Bison</div>
+        <div class="text-sm text-gray-600">Total de Bisontes</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-green-600">{{ availableBison() }}</div>
-        <div class="text-sm text-gray-600">Available</div>
+        <div class="text-sm text-gray-600">Disponibles</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
         <div class="text-2xl font-bold text-yellow-600">{{ needsAttentionBison() }}</div>
-        <div class="text-sm text-gray-600">Need Attention</div>
+        <div class="text-sm text-gray-600">Requieren Atención</div>
       </div>
       <div class="text-center p-4 bg-gray-50 rounded-lg">
-        <div class="text-2xl font-bold text-purple-600">{{ avgFlightHours().toLocaleString() }}</div>
-        <div class="text-sm text-gray-600">Avg Flight Hours</div>
+        <div class="text-2xl font-bold text-purple-600">{{ avgFlightHours() }}</div>
+        <div class="text-sm text-gray-600">Promedio Horas Vuelo</div>
       </div>
     </div>
   </div>
