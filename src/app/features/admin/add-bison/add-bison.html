@@ -1,0 +1,270 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8 bg-white rounded-lg shadow p-6">
+      <div>
+        <h2 class="text-3xl font-bold text-gray-900">Agregar Nuevo Bisonte</h2>
+        <p class="text-gray-600 mt-1">Complete la información del nuevo bisonte para agregarlo a la flota</p>
+      </div>
+      <button 
+        type="button" 
+        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        (click)="goBack()">
+        ← Volver
+      </button>
+    </div>
+
+    <form [formGroup]="bisonForm" (ngSubmit)="onSubmit()" class="space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Información básica -->
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+          <h3 class="text-lg font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Información Básica</h3>
+          
+          <div class="space-y-6">
+            <div>
+              <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre *</label>
+              <input
+                id="nombre"
+                type="text"
+                formControlName="nombre"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('nombre')"
+                [class.ring-red-500]="isFieldInvalid('nombre')"
+                placeholder="Ingrese el nombre del bisonte">
+              @if (isFieldInvalid('nombre')) {
+                <p class="mt-1 text-sm text-red-600">El nombre es requerido</p>
+              }
+            </div>
+
+            <div>
+              <label for="edad" class="block text-sm font-medium text-gray-700 mb-2">Edad (años) *</label>
+              <input
+                id="edad"
+                type="number"
+                formControlName="edad"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('edad')"
+                [class.ring-red-500]="isFieldInvalid('edad')"
+                placeholder="Edad en años"
+                min="0">
+              @if (isFieldInvalid('edad')) {
+                <p class="mt-1 text-sm text-red-600">
+                  @if (bisonForm.get('edad')?.errors?.['required']) {
+                    La edad es requerida
+                  }
+                  @if (bisonForm.get('edad')?.errors?.['min']) {
+                    La edad debe ser mayor a 0
+                  }
+                </p>
+              }
+            </div>
+
+            <div>
+              <label for="peso" class="block text-sm font-medium text-gray-700 mb-2">Peso *</label>
+              <input
+                id="peso"
+                type="text"
+                formControlName="peso"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('peso')"
+                [class.ring-red-500]="isFieldInvalid('peso')"
+                placeholder="Ej: 450 kg">
+              @if (isFieldInvalid('peso')) {
+                <p class="mt-1 text-sm text-red-600">El peso es requerido</p>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Estado y salud -->
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+          <h3 class="text-lg font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Estado y Salud</h3>
+          
+          <div class="space-y-6">
+            <div>
+              <label for="salud" class="block text-sm font-medium text-gray-700 mb-2">Estado de Salud *</label>
+              <select
+                id="salud"
+                formControlName="salud"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('salud')"
+                [class.ring-red-500]="isFieldInvalid('salud')">
+                <option value="">Seleccione el estado de salud</option>
+                <option value="Excelente">Excelente</option>
+                <option value="Buena">Buena</option>
+                <option value="Regular">Regular</option>
+                <option value="Delicada">Delicada</option>
+                <option value="En tratamiento">En tratamiento</option>
+              </select>
+              @if (isFieldInvalid('salud')) {
+                <p class="mt-1 text-sm text-red-600">El estado de salud es requerido</p>
+              }
+            </div>
+
+            <div>
+              <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado General *</label>
+              <select
+                id="estado"
+                formControlName="estado"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('estado')"
+                [class.ring-red-500]="isFieldInvalid('estado')">
+                <option value="">Seleccione el estado</option>
+                <option value="Activo">Activo</option>
+                <option value="En reposo">En reposo</option>
+                <option value="En entrenamiento">En entrenamiento</option>
+                <option value="Fuera de servicio">Fuera de servicio</option>
+              </select>
+              @if (isFieldInvalid('estado')) {
+                <p class="mt-1 text-sm text-red-600">El estado es requerido</p>
+              }
+            </div>
+
+            <div>
+              <label for="ultimo_chequeo" class="block text-sm font-medium text-gray-700 mb-2">Último Chequeo *</label>
+              <input
+                id="ultimo_chequeo"
+                type="date"
+                formControlName="ultimo_chequeo"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('ultimo_chequeo')"
+                [class.ring-red-500]="isFieldInvalid('ultimo_chequeo')">
+              @if (isFieldInvalid('ultimo_chequeo')) {
+                <p class="mt-1 text-sm text-red-600">La fecha del último chequeo es requerida</p>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Información operativa -->
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500">
+          <h3 class="text-lg font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Información Operativa</h3>
+          
+          <div class="space-y-6">
+            <div>
+              <label for="horas_vuelo" class="block text-sm font-medium text-gray-700 mb-2">Horas de Vuelo *</label>
+              <input
+                id="horas_vuelo"
+                type="number"
+                formControlName="horas_vuelo"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('horas_vuelo')"
+                [class.ring-red-500]="isFieldInvalid('horas_vuelo')"
+                placeholder="Horas de vuelo acumuladas"
+                min="0"
+                step="0.1">
+              @if (isFieldInvalid('horas_vuelo')) {
+                <p class="mt-1 text-sm text-red-600">
+                  @if (bisonForm.get('horas_vuelo')?.errors?.['required']) {
+                    Las horas de vuelo son requeridas
+                  }
+                  @if (bisonForm.get('horas_vuelo')?.errors?.['min']) {
+                    Las horas de vuelo deben ser mayor o igual a 0
+                  }
+                </p>
+              }
+            </div>
+
+            <div>
+              <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Hábitat *</label>
+              <input
+                id="habitat"
+                type="text"
+                formControlName="habitat"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('habitat')"
+                [class.ring-red-500]="isFieldInvalid('habitat')"
+                placeholder="Ubicación del hábitat">
+              @if (isFieldInvalid('habitat')) {
+                <p class="mt-1 text-sm text-red-600">El hábitat es requerido</p>
+              }
+            </div>
+
+            <div>
+              <label for="cuidadorId" class="block text-sm font-medium text-gray-700 mb-2">Cuidador Asignado *</label>
+              <select
+                id="cuidadorId"
+                formControlName="cuidadorId"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                [class.border-red-500]="isFieldInvalid('cuidadorId')"
+                [class.ring-red-500]="isFieldInvalid('cuidadorId')">
+                <option value="">Seleccione un cuidador</option>
+                @for (caretaker of caretakers(); track caretaker.id) {
+                  <option [value]="caretaker.id">{{caretaker.nombre}} - {{caretaker.cargo}}</option>
+                }
+              </select>
+              @if (isFieldInvalid('cuidadorId')) {
+                <p class="mt-1 text-sm text-red-600">Debe asignar un cuidador</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-gray-200">
+          <button 
+            type="button" 
+            class="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            (click)="goBack()">
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="w-full sm:w-auto px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            [disabled]="bisonForm.invalid || isSubmitting()">
+            @if (isSubmitting()) {
+              <span class="flex items-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Guardando...
+              </span>
+            } @else {
+              Agregar Bisonte
+            }
+          </button>
+        </div>
+      </div>
+
+      <!-- Mensajes de error y éxito -->
+      @if (errorMessage()) {
+        <div class="rounded-md bg-red-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">Error</h3>
+              <div class="mt-2 text-sm text-red-700">
+                <p>{{errorMessage()}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (successMessage()) {
+        <div class="rounded-md bg-green-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-green-800">Éxito</h3>
+              <div class="mt-2 text-sm text-green-700">
+                <p>{{successMessage()}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </form>
+  </div>
+</div>

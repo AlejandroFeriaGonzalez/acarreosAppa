@@ -5,13 +5,13 @@
       <h1 class="text-3xl font-bold text-gray-900">Gestión de Cuidadores</h1>
       <p class="text-gray-600">Gestiona los cuidadores maestros del aire y sus asignaciones</p>
     </div>
-    <a
-      routerLink="/admin/caretakers/new"
+    <button
+      (click)="navigateToAddCaretaker()"
       class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700"
     >
       <lucide-icon [img]="Plus" class="h-4 w-4 mr-2"></lucide-icon>
       Agregar Nuevo Cuidador
-    </a>
+    </button>
   </div>
 
   <!-- Filters -->

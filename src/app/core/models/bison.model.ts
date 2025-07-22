@@ -12,4 +12,5 @@ export interface Bison {
   updatedAt:      Date;
   cuidadorId:     number;
   bisonteId:      null;
+  
 }
