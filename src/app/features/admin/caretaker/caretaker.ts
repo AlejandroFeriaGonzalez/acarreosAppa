@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { LucideAngularModule, Users, Plus, Search, Edit, Phone, Mail, Calendar, Wind } from 'lucide-angular';
 import { CaretakerService } from '../../../core/services/caretaker.service';
 import { Caretaker } from '../../../core/models/caretaker.model';
@@ -23,6 +23,7 @@ export class CaretakerComponent {
   readonly Wind = Wind;
 
   private caretakerService = inject(CaretakerService);
+  private router = inject(Router);
 
   caretakers = signal<Caretaker[]>([]);
   loading = signal(true);
@@ -113,5 +114,9 @@ export class CaretakerComponent {
     this.searchTerm.set('');
     this.statusFilter.set('all');
     this.specializationFilter.set('all');
+  }
+
+  navigateToAddCaretaker(): void {
+    this.router.navigate(['/admin/add-caretaker']);
   }
 }
