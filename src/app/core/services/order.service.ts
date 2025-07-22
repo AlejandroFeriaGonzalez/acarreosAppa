@@ -14,8 +14,9 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
-  getOrder(id: number): Observable<Order> {
-    return this.http.get<Order>(`http://localhost:3001/envios/${id}`)
+  // numeroGuia es el id de seguimiento
+  getOrderByNumeroGuia(numeroGuia: string): Observable<Order> {
+    return this.http.get<Order>(`http://localhost:3001/envios/${numeroGuia}`)
       .pipe(catchError(this.handleError));
   }
 

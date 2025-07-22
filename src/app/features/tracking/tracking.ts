@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule, Wind, ArrowLeft, Search, MapPin, Clock, CheckCircle, Truck } from 'lucide-angular';
+import { OrderService } from '../../core/services/order.service';
+import { Order, TblDetalleItem } from '../../core/models/order.model';
 
 interface TimelineStep {
   status: string;
@@ -10,8 +12,8 @@ interface TimelineStep {
   active?: boolean;
 }
 
-interface OrderData {
-  id: string;
+interface OrderView {
+  id: number;
   status: string;
   from: string;
   to: string;
@@ -28,7 +30,7 @@ interface OrderData {
   templateUrl: './tracking.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Tracking {
+export class TrackingComponent {
   readonly Wind = Wind;
   readonly ArrowLeft = ArrowLeft;
   readonly Search = Search;
@@ -37,40 +39,54 @@ export class Tracking {
   readonly CheckCircle = CheckCircle;
   readonly Truck = Truck;
 
+  private orderService = inject(OrderService);
+
   trackingIdControl = new FormControl('', { nonNullable: true, validators: [Validators.required] });
-  orderData = signal<OrderData | null>(null);
+  orderData = signal<OrderView | null>(null);
   isLoading = signal(false);
+  error = signal<string | null>(null);
 
   handleTrack(e: Event): void {
     e.preventDefault();
     if (this.trackingIdControl.invalid) {
       return;
     }
-
     this.isLoading.set(true);
+    this.error.set(null);
     const trackingId = this.trackingIdControl.value;
+    this.orderService.getOrderByNumeroGuia(trackingId).subscribe({
+      next: (order: Order) => {
+        // Transformar datos del modelo Order a OrderView para la vista
+        const detalle: TblDetalleItem | undefined = order.tbl_detalle_items?.[0];
+        this.orderData.set({
+          id: order.id,
+          status: detalle?.estado ?? 'Desconocido',
+          from: detalle?.origen ?? '',
+          to: detalle?.destino ?? '',
+          bisonName: order.bisonteId ? `Bisonte #${order.bisonteId}` : 'No asignado',
+          caretaker: 'No disponible',
+          estimatedArrival: 'No disponible',
+          currentLocation: detalle?.estado === 'en camino' ? detalle?.destino ?? '' : '',
+          timeline: [
+            { status: 'Pedido realizado', completed: true, time: this.formatDate(order.createdAt) },
+            { status: 'Bisonte asignado', completed: !!order.bisonteId, time: this.formatDate(order.updatedAt) },
+            { status: 'Recogida completada', completed: detalle?.estado === 'recogido', time: '' },
+            { status: 'En camino', completed: detalle?.estado === 'en camino', time: '' },
+            { status: 'Fuera de entrega', completed: detalle?.estado === 'fuera de entrega', time: '' },
+            { status: 'Entregado', completed: detalle?.estado === 'entregado', time: '' },
+          ],
+        });
+        this.isLoading.set(false);
+      },
+      error: (err: unknown) => {
+        this.error.set((err as Error).message ?? 'No se encontró la orden');
+        this.isLoading.set(false);
+        this.orderData.set(null);
+      }
+    });
+  }
 
-    // Simulate API call
-    setTimeout(() => {
-      this.orderData.set({
-        id: trackingId,
-        status: 'En camino',
-        from: 'Ba Sing Se, Reino Tierra',
-        to: 'Ciudad republica, Republica Unida',
-        bisonName: 'Appa Jr.',
-        caretaker: 'Maestro Jinora',
-        estimatedArrival: 'Mañana, 2:30 PM',
-        currentLocation: "Volando sobre el Paso de la Serpiente",
-        timeline: [
-          { status: 'Pedido realizado', completed: true, time: 'Hace 2 días' },
-          { status: 'Bisonte asignado', completed: true, time: 'Hace un día' },
-          { status: 'Recogida completada', completed: true, time: 'Hace 12 horas' },
-          { status: 'En camino', completed: true, time: 'Current', active: true },
-          { status: 'Fuera de entrega', completed: false, time: 'Mañana' },
-          { status: 'Entregado', completed: false, time: 'Mañana' },
-        ],
-      });
-      this.isLoading.set(false);
-    }, 1000);
+  formatDate(date: Date): string {
+    return new Date(date).toLocaleDateString();
   }
 }
