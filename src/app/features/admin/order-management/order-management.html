@@ -49,100 +49,118 @@
 
   <!-- Orders List -->
   <div class="space-y-4">
-    @for (order of filteredOrders(); track order.id) {
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-        <div class="p-6">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <lucide-icon [img]="Package" class="h-8 w-8 text-blue-600"></lucide-icon>
-              <div>
-                <h3 class="text-lg font-semibold">{{ order.id }}</h3>
-                <p class="text-sm text-gray-600">{{ order.serviceType }}</p>
+    @if (loading()) {
+      <div class="text-center py-8 text-gray-500">Loading orders...</div>
+    } @else if (error()) {
+      <div class="text-center py-8 text-red-600">{{ error() }}</div>
+    } @else if (filteredOrders().length === 0) {
+      <div class="text-center py-8 text-gray-500">No orders found.</div>
+    } @else {
+      @for (order of filteredOrders(); track order.id) {
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <lucide-icon [img]="Package" class="h-8 w-8 text-blue-600"></lucide-icon>
+                <div>
+                  <h3 class="text-lg font-semibold">{{ order.numero_guia }}</h3>
+                  <p class="text-sm text-gray-600">{{ order.observaciones }}</p>
+                </div>
               </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <span [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getPriorityColor(order.priority)">{{ order.priority }}</span>
-              <span [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getStatusColor(order.status)">{{ order.status.replace('_', ' ') }}</span>
-              <a [routerLink]="['/admin/orders', order.id, 'edit']">
-                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-9 w-9">
-                  <lucide-icon [img]="Edit" class="h-4 w-4"></lucide-icon>
-                </button>
-              </a>
+              <div class="flex items-center space-x-2">
+                @if (order.tbl_detalle_items.length) {
+                  <span
+                    [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getPriorityColor(order.tbl_detalle_items[0].prioridad)">
+                    {{ order.tbl_detalle_items[0].prioridad }}
+                  </span>
+                }
+                @if (order.tbl_detalle_items.length) {
+                  <span
+                    [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ' + getStatusColor(order.tbl_detalle_items[0].estado)">
+                    {{ order.tbl_detalle_items[0].estado.replace('_', ' ') }}
+                  </span>
+                }
+                <a [routerLink]="['/admin/orders', order.id, 'edit']">
+                  <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-9 w-9">
+                    <lucide-icon [img]="Edit" class="h-4 w-4"></lucide-icon>
+                  </button>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="p-6 pt-0">
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="space-y-3">
-              <div class="flex items-center space-x-2">
-                <lucide-icon [img]="User" class="h-4 w-4 text-gray-500"></lucide-icon>
-                <div>
-                  <p class="font-medium">{{ order.customer }}</p>
-                  <p class="text-sm text-gray-600">{{ order.customerEmail }}</p>
+          <div class="p-6 pt-0">
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                  <lucide-icon [img]="User" class="h-4 w-4 text-gray-500"></lucide-icon>
+                  <div>
+                    <p class="font-medium">Usuario ID: {{ order.usuarioId }}</p>
+                    <p class="text-sm text-gray-600">Bisonte ID: {{ order.bisonteId ?? 'N/A' }}</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <lucide-icon [img]="MapPin" class="h-4 w-4 text-green-600 mt-1"></lucide-icon>
+                  <div>
+                    <p class="text-sm font-medium">From: {{ order.tbl_detalle_items[0].origen }}</p>
+                    <p class="text-sm font-medium">To: {{ order.tbl_detalle_items[0].destino }}</p>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-start space-x-2">
-                <lucide-icon [img]="MapPin" class="h-4 w-4 text-green-600 mt-1"></lucide-icon>
-                <div>
-                  <p class="text-sm font-medium">From: {{ order.from }}</p>
-                  <p class="text-sm font-medium">To: {{ order.to }}</p>
+
+              <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                  <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-500"></lucide-icon>
+                  <div>
+                    <p class="text-sm">Bisonte ID: <span class="font-medium">{{ order.bisonteId ?? 'N/A' }}</span></p>
+                    <p class="text-sm">Usuario ID: <span class="font-medium">{{ order.usuarioId }}</span></p>
+                  </div>
                 </div>
+                <div class="flex items-center space-x-2">
+                  <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
+                  <div>
+                    <p class="text-sm">Ordered: {{ order.createdAt | date }}</p>
+                    @if (order.updatedAt) {
+                      <p class="text-sm">Updated: {{ order.updatedAt | date }}</p>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                  <lucide-icon [img]="DollarSign" class="h-4 w-4 text-green-600"></lucide-icon>
+                  <div>
+                    <p class="text-lg font-bold">{{ order.tbl_detalle_items[0].precio | currency }}</p>
+                    <p class="text-sm text-gray-600">Weight: {{ order.tbl_detalle_items[0].peso }}</p>
+                  </div>
+                </div>
+                @if (order.observaciones) {
+                  <div>
+                    <p class="text-sm font-medium">Observaciones:</p>
+                    <p class="text-sm text-gray-600">{{ order.observaciones }}</p>
+                  </div>
+                }
               </div>
             </div>
 
-            <div class="space-y-3">
-              <div class="flex items-center space-x-2">
-                <lucide-icon [img]="Wind" class="h-4 w-4 text-blue-500"></lucide-icon>
-                <div>
-                  <p class="text-sm">Bison: <span class="font-medium">{{ order.bison }}</span></p>
-                  <p class="text-sm">Caretaker: <span class="font-medium">{{ order.caretaker }}</span></p>
-                </div>
-              </div>
-              <div class="flex items-center space-x-2">
-                <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
-                <div>
-                  <p class="text-sm">Ordered: {{ order.orderDate | date }}</p>
-                  @if (order.estimatedDelivery !== 'N/A') {
-                    <p class="text-sm">Est. Delivery: {{ order.estimatedDelivery | date }}</p>
-                  }
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex items-center space-x-2">
-                <lucide-icon [img]="DollarSign" class="h-4 w-4 text-green-600"></lucide-icon>
-                <div>
-                  <p class="text-lg font-bold">{{ order.value | currency }}</p>
-                  <p class="text-sm text-gray-600">Weight: {{ order.weight }}</p>
-                </div>
-              </div>
-              @if (order.specialInstructions) {
-                <div>
-                  <p class="text-sm font-medium">Special Instructions:</p>
-                  <p class="text-sm text-gray-600">{{ order.specialInstructions }}</p>
-                </div>
+            <div class="flex space-x-2 mt-6 pt-4 border-t">
+              <a [routerLink]="['/admin/orders', order.id]" class="flex-1">
+                <button class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
+                  View Details
+                </button>
+              </a>
+              @if (order.tbl_detalle_items[0].estado === 'pending') {
+                <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">Assign Bison</button>
+              }
+              @if (order.tbl_detalle_items[0].estado === 'in_transit') {
+                <button class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
+                  Update Status
+                </button>
               }
             </div>
           </div>
-
-          <div class="flex space-x-2 mt-6 pt-4 border-t">
-            <a [routerLink]="['/admin/orders', order.id]" class="flex-1">
-              <button class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
-                View Details
-              </button>
-            </a>
-            @if (order.status === 'pending') {
-              <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">Assign Bison</button>
-            }
-            @if (order.status === 'in_transit') {
-              <button class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2">
-                Update Status
-              </button>
-            }
-          </div>
         </div>
-      </div>
+      }
     }
   </div>
 

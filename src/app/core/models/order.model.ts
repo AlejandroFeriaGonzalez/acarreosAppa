@@ -4,9 +4,9 @@ export interface Order {
   observaciones:     string;
   createdAt:         Date;
   updatedAt:         Date;
-  envioId:           number;
+  envioId:           number | null;
   usuarioId:         number;
-  bisonteId:         null;
+  bisonteId:         number | null;
   tbl_detalle_items: TblDetalleItem[];
 }
 
