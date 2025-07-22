@@ -3,6 +3,24 @@ import { Order } from '../models/order.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 
+// Define el tipo para el body de creación de orden
+export interface CreateOrderPayload {
+  numero_guia: string;
+  observaciones: string;
+  usuarioId: number;
+  bisontelId: number;
+  items: Array<{
+    descripcion: string;
+    cantidad: number;
+    peso: number;
+    prioridad: string;
+    estado: string;
+    precio: number;
+    origen: string;
+    destino: string;
+  }>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,8 +38,8 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
-  createOrder(order: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>): Observable<Order> {
-    return this.http.post<Order>('http://localhost:3001/envios', order)
+  createOrder(payload: CreateOrderPayload): Observable<Order> {
+    return this.http.post<Order>('http://localhost:3001/envios', payload)
       .pipe(catchError(this.handleError));
   }
 
