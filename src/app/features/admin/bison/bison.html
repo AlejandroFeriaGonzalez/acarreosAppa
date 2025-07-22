@@ -2,15 +2,15 @@
   <!-- Header -->
   <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900">Bison Management</h1>
-      <p class="text-gray-600">Manage your flying bison fleet and their health status</p>
+      <h1 class="text-3xl font-bold text-gray-900">Gestión de Bisontes</h1>
+      <p class="text-gray-600">Administra tu flota de bisontes voladores y su estado de salud</p>
     </div>
     <a routerLink="/admin/add-bison" class="w-full md:w-auto">
       <button
         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center justify-center"
       >
         <lucide-icon [img]="Plus" class="h-4 w-4 mr-2"></lucide-icon>
-        Add New Bison
+        Agregar Nuevo Bisonte
       </button>
     </a>
   </div>
@@ -21,7 +21,7 @@
       <div class="relative">
         <lucide-icon [img]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"></lucide-icon>
         <input
-          placeholder="Search bison or caretaker..."
+          placeholder="Buscar bisonte o cuidador..."
           [value]="searchTerm()"
           (input)="updateSearchTerm($event)"
           class="pl-10 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
@@ -32,28 +32,28 @@
         (change)="updateStatusFilter($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       >
-        <option value="all">All Status</option>
-        <option value="Available">Available</option>
-        <option value="In Transit">In Transit</option>
-        <option value="Maintenance">Maintenance</option>
-        <option value="Rest">Rest</option>
+        <option value="all">Todos los Estados</option>
+        <option value="Available">Disponible</option>
+        <option value="In Transit">En Tránsito</option>
+        <option value="Maintenance">Mantenimiento</option>
+        <option value="Rest">Descanso</option>
       </select>
       <select
         [value]="healthFilter()"
         (change)="updateHealthFilter($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       >
-        <option value="all">All Health Status</option>
-        <option value="Excellent">Excellent</option>
-        <option value="Good">Good</option>
-        <option value="Fair">Fair</option>
-        <option value="Poor">Poor</option>
+        <option value="all">Todos los Estados de Salud</option>
+        <option value="Excellent">Excelente</option>
+        <option value="Good">Buena</option>
+        <option value="Fair">Regular</option>
+        <option value="Poor">Mala</option>
       </select>
       <button
         (click)="clearFilters()"
         class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
       >
-        Clear Filters
+        Limpiar Filtros
       </button>
     </div>
   </div>

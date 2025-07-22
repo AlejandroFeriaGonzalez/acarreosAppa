@@ -2,13 +2,9 @@
   <!-- Header -->
   <div class="flex items-center justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900">Order Management</h1>
-      <p class="text-gray-600">Track and manage all hauling orders across the four nations</p>
+      <h1 class="text-3xl font-bold text-gray-900">Gestión de Órdenes</h1>
+      <p class="text-gray-600">Rastrea y administra todas las órdenes de acarreo a través de las cuatro naciones</p>
     </div>
-    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700">
-      <lucide-icon [img]="Package" class="h-4 w-4 mr-2"></lucide-icon>
-      Export Orders
-    </button>
   </div>
 
   <!-- Filters -->
@@ -19,29 +15,29 @@
           <lucide-icon [img]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"></lucide-icon>
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm pl-10"
-            placeholder="Search orders, customers..."
+            placeholder="Buscar órdenes, clientes..."
             [(ngModel)]="searchTerm"
           />
         </div>
         <select [(ngModel)]="statusFilter" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
-          <option value="all">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="in_transit">In Transit</option>
-          <option value="completed">Completed</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="all">Todos los Estados</option>
+          <option value="pending">Pendiente</option>
+          <option value="scheduled">Programada</option>
+          <option value="in_transit">En Tránsito</option>
+          <option value="completed">Completada</option>
+          <option value="cancelled">Cancelada</option>
         </select>
         <select [(ngModel)]="priorityFilter" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
-          <option value="all">All Priority</option>
-          <option value="high">High</option>
-          <option value="standard">Standard</option>
-          <option value="low">Low</option>
+          <option value="all">Todas las Prioridades</option>
+          <option value="high">Alta</option>
+          <option value="standard">Estándar</option>
+          <option value="low">Baja</option>
         </select>
         <button
           (click)="clearFilters()"
           class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2"
         >
-          Clear Filters
+          Limpiar Filtros
         </button>
       </div>
     </div>
@@ -50,11 +46,11 @@
   <!-- Orders List -->
   <div class="space-y-4">
     @if (loading()) {
-      <div class="text-center py-8 text-gray-500">Loading orders...</div>
+      <div class="text-center py-8 text-gray-500">Cargando órdenes...</div>
     } @else if (error()) {
       <div class="text-center py-8 text-red-600">{{ error() }}</div>
     } @else if (filteredOrders().length === 0) {
-      <div class="text-center py-8 text-gray-500">No orders found.</div>
+      <div class="text-center py-8 text-gray-500">No se encontraron órdenes.</div>
     } @else {
       @for (order of filteredOrders(); track order.id) {
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
@@ -108,8 +104,8 @@
                 <div class="flex items-start space-x-2">
                   <lucide-icon [img]="MapPin" class="h-4 w-4 text-green-600 mt-1"></lucide-icon>
                   <div>
-                    <p class="text-sm font-medium">From: {{ order.tbl_detalle_items[0].origen }}</p>
-                    <p class="text-sm font-medium">To: {{ order.tbl_detalle_items[0].destino }}</p>
+                    <p class="text-sm font-medium">De: {{ order.tbl_detalle_items[0].origen }}</p>
+                    <p class="text-sm font-medium">A: {{ order.tbl_detalle_items[0].destino }}</p>
                   </div>
                 </div>
               </div>
@@ -125,9 +121,9 @@
                 <div class="flex items-center space-x-2">
                   <lucide-icon [img]="Calendar" class="h-4 w-4 text-gray-500"></lucide-icon>
                   <div>
-                    <p class="text-sm">Ordered: {{ order.createdAt | date }}</p>
+                    <p class="text-sm">Ordenada: {{ order.createdAt | date }}</p>
                     @if (order.updatedAt) {
-                      <p class="text-sm">Updated: {{ order.updatedAt | date }}</p>
+                      <p class="text-sm">Actualizada: {{ order.updatedAt | date }}</p>
                     }
                   </div>
                 </div>
@@ -138,7 +134,7 @@
                   <lucide-icon [img]="DollarSign" class="h-4 w-4 text-green-600"></lucide-icon>
                   <div>
                     <p class="text-lg font-bold">{{ order.tbl_detalle_items[0].precio | currency }}</p>
-                    <p class="text-sm text-gray-600">Weight: {{ order.tbl_detalle_items[0].peso }}</p>
+                    <p class="text-sm text-gray-600">Peso: {{ order.tbl_detalle_items[0].peso }}</p>
                   </div>
                 </div>
                 @if (order.observaciones) {
@@ -169,25 +165,25 @@
                       class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       [(ngModel)]="order.observaciones"
                       name="observaciones"
-                      placeholder="Update Observaciones"
+                      placeholder="Actualizar Observaciones"
                     />
                     <select
                       class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       [(ngModel)]="order.tbl_detalle_items[0].estado"
                       name="estado"
                     >
-                      <option value="pending">Pending</option>
-                      <option value="scheduled">Scheduled</option>
-                      <option value="in_transit">In Transit</option>
-                      <option value="completed">Completed</option>
-                      <option value="cancelled">Cancelled</option>
+                      <option value="pending">Pendiente</option>
+                      <option value="scheduled">Programada</option>
+                      <option value="in_transit">En Tránsito</option>
+                      <option value="completed">Completada</option>
+                      <option value="cancelled">Cancelada</option>
                     </select>
                     <button
                       type="submit"
                       class="bg-green-600 hover:bg-green-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2"
                       [disabled]="updating()"
                     >
-                      Save
+                      Guardar
                     </button>
                     @if (updateError()) {
                       <div class="text-sm text-red-600">{{ updateError() }}</div>
@@ -208,29 +204,29 @@
   <!-- Orders Summary -->
   <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
     <div class="p-6">
-      <h3 class="text-2xl font-semibold leading-none tracking-tight">Orders Summary</h3>
+      <h3 class="text-2xl font-semibold leading-none tracking-tight">Resumen de Órdenes</h3>
     </div>
     <div class="p-6 pt-0">
       <div class="grid md:grid-cols-5 gap-6">
         <div class="text-center">
           <div class="text-2xl font-bold text-blue-600">{{ ordersSummary().totalOrders }}</div>
-          <div class="text-sm text-gray-600">Total Orders</div>
+          <div class="text-sm text-gray-600">Total de Órdenes</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-yellow-600">{{ ordersSummary().pending }}</div>
-          <div class="text-sm text-gray-600">Pending</div>
+          <div class="text-sm text-gray-600">Pendientes</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-purple-600">{{ ordersSummary().inTransit }}</div>
-          <div class="text-sm text-gray-600">In Transit</div>
+          <div class="text-sm text-gray-600">En Tránsito</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-green-600">{{ ordersSummary().completed }}</div>
-          <div class="text-sm text-gray-600">Completed</div>
+          <div class="text-sm text-gray-600">Completadas</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-orange-600">{{ ordersSummary().totalRevenue | currency }}</div>
-          <div class="text-sm text-gray-600">Total Revenue</div>
+          <div class="text-sm text-gray-600">Ingresos Totales</div>
         </div>
       </div>
     </div>
