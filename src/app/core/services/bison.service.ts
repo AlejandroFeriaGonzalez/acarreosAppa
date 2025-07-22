@@ -1,40 +1,57 @@
-import { Injectable, signal } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { Bison } from '../models/bison.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BisonService {
-  private bisons = signal<Bison[]>([
-    { 
-      id: '1', 
-      name: 'Thunder', 
-      age: 5, 
-      weight: 800,
-      breed: 'American Bison',
-      gender: 'male',
-      healthStatus: 'healthy', 
-      currentLocation: 'Field A',
-      dateOfBirth: '2019-03-15',
-      caretakerId: '1'
-    },
-    { 
-      id: '2', 
-      name: 'Storm', 
-      age: 8, 
-      weight: 750,
-      breed: 'Plains Bison',
-      gender: 'female',
-      healthStatus: 'sick', 
-      currentLocation: 'Barn',
-      dateOfBirth: '2016-07-22',
-      caretakerId: '2'
-    },
-  ]);
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3001/bisontes';
 
-  getBisons() {
-    return this.bisons.asReadonly();
+  getBisons(): Observable<Bison[]> {
+    return this.http
+      .get<Bison[]>(this.apiUrl)
+      .pipe(catchError(this.handleError));
+  }
+
+  getBison(id: number): Observable<Bison> {
+    return this.http
+      .get<Bison>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  createBison(bison: Omit<Bison, 'id' | 'createdAt' | 'updatedAt'>): Observable<Bison> {
+    return this.http
+      .post<Bison>(this.apiUrl, bison)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateBison(id: number, bison: Partial<Bison>): Observable<Bison> {
+    return this.http
+      .put<Bison>(`${this.apiUrl}/${id}`, bison)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteBison(id: number): Observable<void> {
+    return this.http
+      .delete<void>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Manejo de errores centralizado
+  private handleError(error: any) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del lado del servidor
+      errorMessage = `Código de error: ${error.status}\nMensaje: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 
   createBison(bisonData: Pick<Bison, 'name' | 'age' | 'weight' | 'breed' | 'gender' | 'healthStatus' | 'currentLocation' | 'dateOfBirth'>): Observable<Bison> {

@@ -48,32 +48,36 @@
       </div>
     </div>
 
+    <!-- Mensaje de carga y error -->
+    <div *ngIf="loading()" class="text-center py-8 text-gray-500">Cargando bisontes...</div>
+    <div *ngIf="error()" class="text-center py-8 text-red-500">{{ error() }}</div>
+
     <!-- Bison Grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" *ngIf="!loading() && !error()">
       <div *ngFor="let bison of filteredBison()" class="p-6 bg-white shadow rounded hover:shadow-lg transition-shadow">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl font-bold">{{ bison.name }}</h2>
-          <span class="px-2 py-1 rounded text-sm" [class]="getStatusColor(bison.status)">
-            {{ bison.status }}
+          <h2 class="text-xl font-bold">{{ bison.nombre }}</h2>
+          <span class="px-2 py-1 rounded text-sm" [class]="getStatusColor(bison.estado)">
+            {{ bison.estado }}
           </span>
         </div>
-        <p class="text-gray-600 mb-4">Edad: {{ bison.age }} años • {{ bison.specialization }}</p>
+        <p class="text-gray-600 mb-4">Edad: {{ bison.edad }} años • {{ bison.salud }}</p>
         <div class="flex items-center space-x-2 mb-4">
           <lucide-icon [img]="Star" class="h-4 w-4 text-yellow-500"></lucide-icon>
-          <span class="font-medium">{{ bison.rating }}</span>
-          <span class="text-gray-500">({{ bison.completedJobs }} viajes)</span>
+          <span class="font-medium">{{ bison.peso }}</span>
+          <span class="text-gray-500">({{ bison.horas_vuelo }} horas vuelo)</span>
         </div>
         <div class="flex items-center space-x-2 text-sm text-gray-600 mb-4">
           <lucide-icon [img]="MapPin" class="h-4 w-4"></lucide-icon>
-          <span>{{ bison.location }}</span>
+          <span>{{ bison.habitat }}</span>
         </div>
         <div class="flex items-center space-x-2 text-sm text-gray-600 mb-4">
           <lucide-icon [img]="Heart" class="h-4 w-4"></lucide-icon>
-          <span>Caretaker: {{ bison.caretaker }}</span>
+          <span>Cuid. ID: {{ bison.cuidadorId }}</span>
         </div>
-        <p class="text-sm text-gray-600 mb-4">{{ bison.description }}</p>
-        <a *ngIf="bison.status === 'Disponible'" routerLink="/order" class="block w-full text-center py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Solicitar {{ bison.name }}
+        <p class="text-sm text-gray-600 mb-4">Último chequeo: {{ bison.ultimo_chequeo | date:'shortDate' }}</p>
+        <a *ngIf="bison.estado === 'Disponible'" routerLink="/order" class="block w-full text-center py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Solicitar {{ bison.nombre }}
         </a>
       </div>
     </div>
