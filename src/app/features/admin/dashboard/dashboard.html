@@ -62,37 +62,32 @@
       <div class="p-4 pt-0">
         <div class="space-y-4">
           @for (order of recentOrders; track order.id) {
-            <div class="flex items-center justify-between p-3 border rounded-lg">
-              <div class="space-y-1">
-                <div class="flex items-center space-x-2">
-                  <span class="font-medium">{{ order.id }}</span>
-                  <span
-                    class="px-2 py-0.5 text-xs font-semibold rounded-full capitalize"
-                    [class.bg-green-100]="order.status === 'completed'"
-                    [class.text-green-800]="order.status === 'completed'"
-                    [class.bg-blue-100]="order.status === 'in_transit'"
-                    [class.text-blue-800]="order.status === 'in_transit'"
-                    [class.bg-gray-100]="order.status === 'pending'"
-                    [class.text-gray-800]="order.status === 'pending'"
-                  >
-                    {{ getStatusTranslation(order.status) }}
-                  </span>
-                </div>
-                <p class="text-sm text-gray-600">{{ order.customer }}</p>
-                <p class="text-xs text-gray-500">{{ order.from }} → {{ order.to }}</p>
+          <div class="flex items-center justify-between p-3 border rounded-lg">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="font-medium">{{ order.id }}</span>
+                <span class="px-2 py-0.5 text-xs font-semibold rounded-full capitalize"
+                  [class.bg-green-100]="order.status === 'completed'"
+                  [class.text-green-800]="order.status === 'completed'"
+                  [class.bg-blue-100]="order.status === 'in_transit'"
+                  [class.text-blue-800]="order.status === 'in_transit'" [class.bg-gray-100]="order.status === 'pending'"
+                  [class.text-gray-800]="order.status === 'pending'">
+                  {{ getStatusTranslation(order.status) }}
+                </span>
               </div>
-              <div class="text-right">
-                <p class="font-medium">${{ order.value }}</p>
-                <p class="text-xs text-gray-500">{{ order.bison }}</p>
-              </div>
+              <p class="text-sm text-gray-600">{{ order.customer }}</p>
+              <p class="text-xs text-gray-500">{{ order.from }} → {{ order.to }}</p>
             </div>
+            <div class="text-right">
+              <p class="font-medium">${{ order.value }}</p>
+              <p class="text-xs text-gray-500">{{ order.bison }}</p>
+            </div>
+          </div>
           }
         </div>
         <div class="mt-4">
-          <a
-            routerLink="/admin/orders"
-            class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border"
-          >
+          <a routerLink="/admin/orders"
+            class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
             Ver Todas las Órdenes
           </a>
         </div>
@@ -105,9 +100,10 @@
         <h3 class="flex items-center space-x-2 font-semibold">
           <span>Alertas y Notificaciones</span>
           @if (stats().alerts > 0) {
-            <span class="inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-white">
-              {{ stats().alerts }}
-            </span>
+          <span
+            class="inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-white">
+            {{ stats().alerts }}
+          </span>
           }
         </h3>
         <p class="text-sm text-gray-600">Actualizaciones importantes que requieren atención</p>
@@ -115,29 +111,30 @@
       <div class="p-4 pt-0">
         <div class="space-y-4">
           @for (alert of alerts; track $index) {
-            <div class="flex items-start space-x-3 p-3 border rounded-lg">
-              <div class="flex-shrink-0 mt-1">
-                @switch (alert.type) {
-                  @case ('urgent') {
-                    <lucide-icon [img]="AlertTriangle" class="h-4 w-4 text-red-500"></lucide-icon>
-                  }
-                  @case ('warning') {
-                    <lucide-icon [img]="Clock" class="h-4 w-4 text-yellow-500"></lucide-icon>
-                  }
-                  @case ('info') {
-                    <lucide-icon [img]="CheckCircle" class="h-4 w-4 text-blue-500"></lucide-icon>
-                  }
-                }
-              </div>
-              <div class="flex-1">
-                <p class="text-sm font-medium">{{ alert.message }}</p>
-                <p class="text-xs text-gray-500">{{ alert.time }}</p>
-              </div>
+          <div class="flex items-start space-x-3 p-3 border rounded-lg">
+            <div class="flex-shrink-0 mt-1">
+              @switch (alert.type) {
+              @case ('urgent') {
+              <lucide-icon [img]="AlertTriangle" class="h-4 w-4 text-red-500"></lucide-icon>
+              }
+              @case ('warning') {
+              <lucide-icon [img]="Clock" class="h-4 w-4 text-yellow-500"></lucide-icon>
+              }
+              @case ('info') {
+              <lucide-icon [img]="CheckCircle" class="h-4 w-4 text-blue-500"></lucide-icon>
+              }
+              }
             </div>
+            <div class="flex-1">
+              <p class="text-sm font-medium">{{ alert.message }}</p>
+              <p class="text-xs text-gray-500">{{ alert.time }}</p>
+            </div>
+          </div>
           }
         </div>
         <div class="mt-4">
-          <button class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
+          <button
+            class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 border">
             Ver Todas las Alertas
           </button>
         </div>
@@ -152,28 +149,21 @@
       <p class="text-sm text-gray-600">Tareas administrativas comunes</p>
     </div>
     <div class="p-4 pt-0">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <a
-          routerLink="/admin/bison/new"
-          class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
-        >
-          <lucide-icon [img]="Wind" class="h-6 w-6"></lucide-icon>
-          <span>Agregar Bisonte</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <a routerLink="/admin/add-bison"
+          class="w-full h-24 flex flex-col space-y-2 items-center justify-center border rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group">
+          <lucide-icon [img]="Wind" class="h-8 w-8 text-blue-600 group-hover:text-blue-700"></lucide-icon>
+          <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Agregar Bisonte</span>
         </a>
-        <a
-          routerLink="/admin/caretakers/new"
-          class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg"
-        >
-          <lucide-icon [img]="Users" class="h-6 w-6"></lucide-icon>
-          <span>Agregar Cuidador</span>
+        <a routerLink="/admin/add-caretaker"
+          class="w-full h-24 flex flex-col space-y-2 items-center justify-center border rounded-lg hover:border-green-300 hover:bg-green-50 transition-all duration-200 group">
+          <lucide-icon [img]="Users" class="h-8 w-8 text-green-600 group-hover:text-green-700"></lucide-icon>
+          <span class="text-sm font-medium text-gray-700 group-hover:text-green-700">Agregar Cuidador</span>
         </a>
-        <a routerLink="/admin/orders" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
-          <lucide-icon [img]="Package" class="h-6 w-6"></lucide-icon>
-          <span>Gestionar Órdenes</span>
-        </a>
-        <a routerLink="/admin/reports" class="w-full h-20 flex flex-col space-y-2 items-center justify-center border rounded-lg">
-          <lucide-icon [img]="TrendingUp" class="h-6 w-6"></lucide-icon>
-          <span>Ver Reportes</span>
+        <a routerLink="/admin/order-management"
+          class="w-full h-24 flex flex-col space-y-2 items-center justify-center border rounded-lg hover:border-orange-300 hover:bg-orange-50 transition-all duration-200 group">
+          <lucide-icon [img]="Package" class="h-8 w-8 text-orange-600 group-hover:text-orange-700"></lucide-icon>
+          <span class="text-sm font-medium text-gray-700 group-hover:text-orange-700">Gestionar Órdenes</span>
         </a>
       </div>
     </div>
